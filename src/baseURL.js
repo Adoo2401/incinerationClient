@@ -1,2 +1,2 @@
-const baseURL='http://localhost:4500/api/v1';
+const baseURL='https://incinerationbackend-production.up.railway.app/api/v1';
 export default baseURL;

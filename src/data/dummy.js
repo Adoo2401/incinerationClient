@@ -5,13 +5,17 @@ import { BsKanban, BsBarChart, BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft
 import {IoMdAdd} from 'react-icons/io'
 import { BiColorFill } from 'react-icons/bi';
 import { IoMdContacts } from 'react-icons/io';
-import { RiContactsLine, RiStockLine } from 'react-icons/ri';
+import { RiContactsLine, RiDeleteBack2Line, RiDeleteBackFill, RiEditCircleFill, RiStockLine } from 'react-icons/ri';
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GiLouvrePyramid } from 'react-icons/gi';
-import { GrLocation } from 'react-icons/gr';
+import { GrLocation,GrUserWorker } from 'react-icons/gr';
 import { FaStackExchange } from 'react-icons/fa';
+import {
+  DataManager,
+  Query,
+} from '@syncfusion/ej2-data';
 import avatar from './avatar.jpg';
 import avatar2 from './avatar2.jpg';
 import avatar3 from './avatar3.png';
@@ -25,6 +29,10 @@ import product6 from './product6.jpg';
 import product7 from './product7.jpg';
 import product8 from './product8.jpg';
 import { GoDatabase } from 'react-icons/go';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { deletee } from '../controllers/apiController';
+import { toast } from 'react-toastify';
 
 
 
@@ -468,10 +476,6 @@ export const links = [
   {
     title: 'Dashboard',
     links: [
-      {
-        name: 'ecommerce',
-        icon: <FiShoppingBag />,
-      },
     ],
   },
 
@@ -487,6 +491,19 @@ export const links = [
         icon:<IoMdAdd/>
       },
       {
+        name:"Add Operator Data",
+        icon:<GrUserWorker/>
+      },
+      {
+        name:"Operators Data",
+        icon: <GoDatabase />,
+      },
+      {
+       name:"operator Summary",
+       icon:<BsStack/>
+
+      },
+      {
         name:"Summary",
         icon:<BsStack/>
       },
@@ -494,37 +511,9 @@ export const links = [
         name:"Weekly Summary",
         icon:<FaStackExchange/>
       },
-      {
-        name: 'employees',
-        icon: <IoMdContacts />,
-      },
-      {
-        name: 'customers',
-        icon: <RiContactsLine />,
-      },
     ],
   },
-  {
-    title: 'Apps',
-    links: [
-      {
-        name: 'calendar',
-        icon: <AiOutlineCalendar />,
-      },
-      {
-        name: 'kanban',
-        icon: <BsKanban />,
-      },
-      {
-        name: 'editor',
-        icon: <FiEdit />,
-      },
-      {
-        name: 'color-picker',
-        icon: <BiColorFill />,
-      },
-    ],
-  },
+
   {
     title: 'Charts',
     links: [
@@ -532,30 +521,15 @@ export const links = [
         name: 'line',
         icon: <AiOutlineStock />,
       },
-      {
-        name: 'area',
-        icon: <AiOutlineAreaChart />,
-      },
-
-      {
-        name: 'bar',
-        icon: <AiOutlineBarChart />,
-      },
+    
       {
         name: 'pie',
         icon: <FiPieChart />,
       },
-      {
-        name: 'financial',
-        icon: <RiStockLine />,
-      },
+      
       {
         name: 'color-mapping',
         icon: <BsBarChart />,
-      },
-      {
-        name: 'pyramid',
-        icon: <GiLouvrePyramid />,
       },
       {
         name: 'stacked',
@@ -892,6 +866,132 @@ export const end=(props)=>{
   return <p>{end[0]+"  "+end[1]}</p>
 }
 
+const dateOperator=(props)=>{
+
+  let d=new Date(props.date)
+  return(
+    <p>{d.toDateString()}</p>
+  )
+}
+
+export const operatorSummaryGrid=[
+  {
+    field:"location",
+    textAlign:"center",
+    headerText:"Location",
+    width:"200"
+  },
+  {
+    field:"shift1",
+    textAlign:"center",
+    headerText:"Shift 1",
+    width:"200"
+  },
+  {
+    field:"shift2",
+    textAlign:"center",
+    headerText:"Shift 2",
+    width:"200"
+  },
+  {
+    field:"total",
+    textAlign:"center",
+    headerText:"Total",
+    width:"200"
+  },
+]
+
+export const operatorDataGrid=[
+  {
+    field:"date",
+    textAlign:"center",
+    template:dateOperator,
+    headerText:"Date",
+    width:'200'
+  },
+  {
+    field:"location",
+    textAlign:"center",
+    headerText:"Location",
+    width:'200'
+  },
+  {
+    field:"shift",
+    textAlign:"center",
+    headerText:"Shift",
+    width:'200'
+  },
+  {
+    field:"operatorName",
+    textAlign:"center",
+    headerText:"Operator Name",
+    width:'200'
+  },
+  {
+    field:"startTime",
+    textAlign:"center",
+    headerText:"Start Time",
+    width:'200'
+  },
+  {
+    field:"endTime",
+    textAlign:"center",
+    headerText:"End Time",
+    width:'200'
+  },
+  {
+    field:"totalTime",
+    textAlign:"center",
+    headerText:"Total Time",
+    width:'200'
+  },
+  {
+    field:"break",
+    textAlign:"center",
+    headerText:"Break",
+    width:'200'
+  },
+  {
+    field:"totalWorkingTime",
+    textAlign:"center",
+    headerText:"Total Working Time",
+    width:'200'
+  },
+  
+  
+]
+
+const Edit=(props)=>{
+
+  return(
+    <Link to={`/editIncinerationProgress/${props._id}`}><Button variant='contained' color="inherit" endIcon={<RiEditCircleFill/>}>Edit</Button></Link>
+  )
+
+}
+
+const Delete=(props)=>{
+
+  async function del(){
+  
+   if(confirm("Are you sure you want to delete this entry")){
+
+   
+   let resp=await deletee(sessionStorage.getItem("token"),props._id);
+   if(resp){
+    toast.success("Deleted");
+    return location.reload();
+   }
+  }
+  }
+
+  return(
+    <Button onClick={del} variant='contained' color="error" endIcon={<RiDeleteBack2Line/>}>Delte</Button>
+  )
+
+}
+
+
+
 export const incinerationSummaryProgressGrid = [
   {
     field:"dateFormat",
@@ -904,6 +1004,7 @@ export const incinerationSummaryProgressGrid = [
     field: 'location',
     textAlign:"Center",
     headerText: 'Location',
+    filter:{type:"CheckBox"},
     width: '200',
   },
   { field: 'start',
@@ -973,6 +1074,20 @@ export const incinerationSummaryProgressGrid = [
     field: 'remarks',
     textAlign:"Center",
     headerText: 'Remarks',
+    width: '200',
+  },
+  {
+    field: 'Edit',
+    template:Edit,
+    textAlign:"Center",
+    headerText: 'Edit',
+    width: '200',
+  },
+  {
+    field: 'Delete',
+    template:Delete,
+    textAlign:"Center",
+    headerText: 'Delete',
     width: '200',
   },
 ];

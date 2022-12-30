@@ -10,41 +10,41 @@
             return parseInt(s);
         }
          
-        // function diff( s1,  s2)
-        // {
+        export function diff( s1,  s2)
+        {
          
            
-        //      let time1 = removeColon(s1);
+             let time1 = removeColon(s1);
             
-        //      let time2 = removeColon(s2);
+             let time2 = removeColon(s2);
              
          
-        //     // difference between hours
-        //      let hourDiff = parseFloat(time2 / 100 - time1 / 100 - 1);
-        //      let hourDiff2 = parseInt(time2 / 100 - time1 / 100 - 1);
+            // difference between hours
+             let hourDiff = parseFloat(time2 / 100 - time1 / 100 - 1);
+             let hourDiff2 = parseInt(time2 / 100 - time1 / 100 - 1);
              
             
-        //      let check;
+             let check;
            
-        //      let minDiff = parseInt(time2 % 100 + (60 - time1 % 100));
+             let minDiff = parseInt(time2 % 100 + (60 - time1 % 100));
              
          
-        //     if (minDiff >= 60) {
-        //         if(hourDiff.toString().split('-')[0]!=""){
-        //             console.log('yes');
-        //             hourDiff2++
-        //             check=true
-        //         }                
-        //         minDiff = minDiff - 60;
-        //     }
-        //     if(minDiff===0){
-        //         hourDiff2=hourDiff2+1
-        //     }
+            if (minDiff >= 60) {
+                if(hourDiff.toString().split('-')[0]!=""){
+                    console.log('yes');
+                    hourDiff2++
+                    check=true
+                }                
+                minDiff = minDiff - 60;
+            }
+            if(minDiff===0){
+                hourDiff2=hourDiff2+1
+            }
           
             
-        //     let res = (check?hourDiff2:Math.ceil(hourDiff)).toString() + ':' + (minDiff).toString();
-        //     return res;
-        // }
+            let res = (check?hourDiff2:Math.ceil(hourDiff)).toString() + ':' + (minDiff).toString();
+            return res;
+        }
          
 function diff_hours(dt1, dt2) 
  {
@@ -82,3 +82,4 @@ function diff_hours(dt1, dt2)
 
              
 export default diff_hours;
+

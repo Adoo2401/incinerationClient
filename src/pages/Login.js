@@ -15,7 +15,7 @@ const Login = () => {
 
         const auth=sessionStorage.getItem("user");
         if(auth){
-             navigate("/")
+             navigate("/IncinerationProgress")
         }
 
     },[])
@@ -34,7 +34,7 @@ const Login = () => {
           sessionStorage.setItem('user',JSON.stringify(resp.message))
           sessionStorage.setItem("token",resp.token)
           setAuth(resp.message);
-          navigate("/");
+          navigate("/IncinerationProgress");
           return toast.success("Successfully Login")
         }
 

@@ -49,9 +49,9 @@ const IncinerationProgressInputs = () => {
     loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
     </div>:<form onSubmit={handleSubmit}>
-    <div style={{width:'100%',display:"flex",justifyContent:"space-between",flexWrap:"wrap"}} > 
-        <TextField id="standard-basic" onChange={changeInput} name='date' required  type='date' label="Date" variant="standard" />
-        <FormControl style={{flex:0.3}}>
+    <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr"}} > 
+        <TextField style={{margin:"20px 0"}} label="date" className='date' id="standard-basic date" onChange={changeInput} name='date' required  type='date'  variant="standard" />
+        <FormControl style={{margin:"20px 0"}}>
         <InputLabel id="demo-simple-select-label">Location</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -79,12 +79,12 @@ const IncinerationProgressInputs = () => {
           
         </Select>
       </FormControl>
-        <TextField id="standard-basic" onChange={changeInput} name="start" required label="start" type="datetime-local" variant="standard" />
-        <TextField id="standard-basic" onChange={changeInput} name="end"  required label="end" type="datetime-local" variant="standard" />
-        <TextField id="standard-basic" value={totalTime} disabled variant="standard" label="Total Time" />
+        <TextField style={{margin:"20px 0"}} id="standard-basic" onChange={changeInput} name="start" required label="start" type="datetime-local" variant="standard" />
+        <TextField style={{margin:"20px 0"}} id="standard-basic" onChange={changeInput} name="end"  required label="end" type="datetime-local" variant="standard" />
+        <TextField style={{margin:"20px 0"}} id="standard-basic" value={totalTime} disabled variant="standard" label="Total Time" />
     </div>
-    <div style={{width:'100%',marginTop:"60px",display:"flex",justifyContent:"space-between",flexWrap:"wrap"}} > 
-    <FormControl style={{flex:0.3}}>
+    <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}} > 
+    <FormControl style={{flex:0.3,marginTop:"20px"}}>
         <InputLabel id="demo-simple-select-label">Status</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -99,8 +99,8 @@ const IncinerationProgressInputs = () => {
           <MenuItem value={"non operational"}>Non Operational</MenuItem>
         </Select>
       </FormControl>
-        <TextField id="standard-basic"  onChange={changeInput} name='activity' required label="Activity" variant="standard" />
-        <FormControl style={{flex:0.3}}>
+        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='activity' required label="Activity" variant="standard" />
+        <FormControl style={{flex:0.3,marginTop:"20px"}}>
         <InputLabel id="demo-simple-select-label">Shutdown Nature</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -114,15 +114,15 @@ const IncinerationProgressInputs = () => {
           <MenuItem value={"interrupted"}>Interrupted</MenuItem>
         </Select>
       </FormControl>
-        <TextField id="standard-basic"  onChange={changeInput} name='reason' label="Reason" variant="standard" />
-        <TextField id="standard-basic"  onChange={changeInput} name='bagsIncinerated' variant="standard" label="Bags Incinerated" type="number" />
+        <TextField style={{marginTop:"20px"}} id="standard-basic"  onChange={changeInput} name='reason' label="Reason" variant="standard" />
+        <TextField style={{marginTop:"20px"}} id="standard-basic"  onChange={changeInput} name='bagsIncinerated' variant="standard" label="Bags Incinerated" type="number" />
     </div>
-    <div style={{width:'100%',marginTop:"60px",display:"flex",justifyContent:"space-between",flexWrap:"wrap"}} > 
-        <TextField id="standard-basic"  onChange={changeInput} name='bagsWeight' label="Bags Weight KG" type={'text'} variant="standard" />
-        <TextField id="standard-basic"  onChange={changeInput} name='operator' required label="Operator" variant="standard" />
-        <TextField id="standard-basic"  onChange={changeInput} name='remarks' label="Remarks"  variant="standard" />
+    <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}} > 
+        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='bagsWeight' label="Bags Weight KG" type={'text'} variant="standard" />
+        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='operator' required label="Operator" variant="standard" />
+        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='remarks' label="Remarks"  variant="standard" />
     </div>
-    <div style={{width:"100%",display:"flex",marginTop:"40px",display:"flex",justifyContent:"center"}}>
+    <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}}>
          <Button type="submit" variant="contained"  style={{flex:0.3,backgroundColor:currentColor}}>Create</Button>
     </div>
     </form>

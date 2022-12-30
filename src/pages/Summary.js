@@ -39,7 +39,7 @@ const Summary = () => {
       <TextField style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" />
        {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
-    </div>: <><GridComponent allowTextWrap={true} dataSource={data} allowPdfExport={true}  page pag toolbar={['Search']} width='auto'  allowSorting allowFiltering >
+    </div>: <><GridComponent allowTextWrap={true} dataSource={data} allowPdfExport={true}  toolbar={['Search']} width='auto'  allowSorting allowFiltering >
         <ColumnsDirective>
 
            {incinerationSummaryGrid.map((item,index)=>

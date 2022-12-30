@@ -4,13 +4,17 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Summary from './pages/Summary'
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Ecommerce, IncinerationProgress, Calendar, Employees, Stacked, Pyramid, Customers, Kanban, Line, Area, Bar, Pie, Financial, ColorPicker, ColorMapping, Editor } from './pages';
+import { Ecommerce, IncinerationProgress, Stacked, Line, Pie, ColorMapping } from './pages';
 import './App.css';
 import WeeklySummary from './pages/WeeklySummary'
 import { useStateContext } from './contexts/ContextProvider';
 import AddIncinerationProgress from './pages/AddIncinerationProgress';
 import Protect from './secure/Protect';
 import Login from './pages/Login';
+import AddOperator from './pages/AddOperator';
+import OperatorDatas from './pages/OperatorData';
+import OperatorSummary from './pages/operatorSummary';
+import EditIncinerationProgress from './pages/EditIncinerationProgress';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,auth } = useStateContext();
@@ -23,6 +27,8 @@ const App = () => {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
+
+
   }, []);
 
   return (
@@ -76,25 +82,20 @@ const App = () => {
                 {/* pages  */}
                 <Route path="/AddIncinerationProgress" element={<AddIncinerationProgress/>}/>
                 <Route path="/IncinerationProgress" element={<IncinerationProgress />} />
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} />
+                <Route path="/AddOperatorData" element={<AddOperator/>} />
+                <Route path="/OperatorsData" element={<OperatorDatas/>}/>
                 <Route path="/Summary" element={<Summary/>}/>
+                <Route path="operatorSummary" element={<OperatorSummary/>}/>
                 <Route path="/WeeklySummary" element={<WeeklySummary/>}/>
+                <Route path="/editIncinerationProgress/:id" element={<EditIncinerationProgress/>}/>
 
-                {/* apps  */}
-                <Route path="/kanban" element={<Kanban />} />
-                <Route path="/editor" element={<Editor />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/color-picker" element={<ColorPicker />} />
+               
 
                 {/* charts  */}
                 <Route path="/line" element={<Line />} />
-                <Route path="/area" element={<Area />} />
-                <Route path="/bar" element={<Bar />} />
                 <Route path="/pie" element={<Pie />} />
-                <Route path="/financial" element={<Financial />} />
                 <Route path="/color-mapping" element={<ColorMapping />} />
-                <Route path="/pyramid" element={<Pyramid />} />
+    
                 <Route path="/stacked" element={<Stacked />} />
               </Route>
                 <Route path="/login" element={<Login/>}/>
