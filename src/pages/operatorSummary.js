@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport} from '@syncfusion/ej2-react-grids'
+import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport, ExcelExport} from '@syncfusion/ej2-react-grids'
 import {contextMenuItems, operatorSummaryGrid} from '../data/dummy';
 import { Header } from '../components';
 import { getOperatorSumary} from '../controllers/apiController';
 import { CircularProgress, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 
-const OperatorSummary = () => {
+const OperatorSummary = ({dateFrom,to}) => {
 
   const [data,setData]=useState([])
   let token=sessionStorage.getItem("token")
@@ -15,10 +15,12 @@ const OperatorSummary = () => {
 
   useEffect(async()=>{
   
+    setDate(dateFrom)
     if(date!==""){
         setLoader(true)
-        let resp=await getOperatorSumary(token,date);
+        let resp=await getOperatorSumary(token,dateFrom,to);
     if(resp){
+  
         setData(resp.message)
         return setLoader(false) 
     }
@@ -26,16 +28,26 @@ const OperatorSummary = () => {
     toast.error("Something Went Wrong");
     }
 
-  },[date])
+  },[date,to])
+
+  let grid;
+  const toolbarClick = (args) => {
+
+    if (grid && args.item.id === 'grid_excelexport') {
+        grid.excelExport();
+    }else{
+      grid.pdfExport();
+    }
+
+  }
 
   
   return (
-    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Page" title="Operators Summary" />
-      <TextField style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" />
+    <>
+
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress/>
-      </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:50}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
+      </div>:<GridComponent id='grid' ref={g => grid = g} filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:15}} toolbarClick={toolbarClick} allowExcelExport={true} width="40%" toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 
            {operatorSummaryGrid.map((item,index)=>
@@ -44,9 +56,9 @@ const OperatorSummary = () => {
            )}
 
         </ColumnsDirective>
-        <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort]} />
+        <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort,PdfExport,ExcelExport]} />
       </GridComponent>}
-    </div>
+</>
   );
 };
 export default OperatorSummary;

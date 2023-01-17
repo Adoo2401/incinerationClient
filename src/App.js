@@ -4,9 +4,10 @@ import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Summary from './pages/Summary'
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Ecommerce, IncinerationProgress, Stacked, Line, Pie, ColorMapping } from './pages';
+import { Dashboard, IncinerationProgress, Stacked, Line, Pie, ColorMapping } from './pages';
 import './App.css';
 import WeeklySummary from './pages/WeeklySummary'
+import Location from './pages/Location'
 import { useStateContext } from './contexts/ContextProvider';
 import AddIncinerationProgress from './pages/AddIncinerationProgress';
 import Protect from './secure/Protect';
@@ -15,6 +16,7 @@ import AddOperator from './pages/AddOperator';
 import OperatorDatas from './pages/OperatorData';
 import OperatorSummary from './pages/operatorSummary';
 import EditIncinerationProgress from './pages/EditIncinerationProgress';
+import baseURL from './baseURL';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings,auth } = useStateContext();
@@ -68,16 +70,16 @@ const App = () => {
             }
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
-              {auth?<Navbar />:null}
+              <Navbar />
             </div>
             <div>
               {themeSettings && (<ThemeSettings />)}
 
             <Routes>
                 {/* dashboard  */}
+                <Route path="/" element={(<Dashboard />)} />
+                <Route path="/dashboard" element={(<Dashboard />)} />
               <Route element={<Protect/>}>
-                <Route path="/" element={(<Ecommerce />)} />
-                <Route path="/ecommerce" element={(<Ecommerce />)} />
 
                 {/* pages  */}
                 <Route path="/AddIncinerationProgress" element={<AddIncinerationProgress/>}/>
@@ -85,18 +87,11 @@ const App = () => {
                 <Route path="/AddOperatorData" element={<AddOperator/>} />
                 <Route path="/OperatorsData" element={<OperatorDatas/>}/>
                 <Route path="/Summary" element={<Summary/>}/>
-                <Route path="operatorSummary" element={<OperatorSummary/>}/>
-                <Route path="/WeeklySummary" element={<WeeklySummary/>}/>
+                <Route path="/Locations" element={<Location/>}/>
                 <Route path="/editIncinerationProgress/:id" element={<EditIncinerationProgress/>}/>
 
-               
 
-                {/* charts  */}
-                <Route path="/line" element={<Line />} />
-                <Route path="/pie" element={<Pie />} />
-                <Route path="/color-mapping" element={<ColorMapping />} />
     
-                <Route path="/stacked" element={<Stacked />} />
               </Route>
                 <Route path="/login" element={<Login/>}/>
             </Routes>

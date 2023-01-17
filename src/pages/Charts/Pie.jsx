@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useStateContext } from '../../contexts/ContextProvider';
 
-const Pie = () => {
+const Pie = ({dateProp,to}) => {
   let token=sessionStorage.getItem("token");
   const [date,setDate]=useState("")
   const [data,setData]=useState([])
@@ -15,30 +15,30 @@ const Pie = () => {
   const { currentColor} = useStateContext();
 
   useEffect(async()=>{
+
     
+    setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getPieData(token,date)
+      let resp=await getPieData(token,dateProp,to)
+
     if(resp.message!='Incomplete'){
       setData(resp.message)
       return setLoader(false)
     }
 
-    if(resp.message==='Incomplete'){
-      toast.warn("Incomplete Data")
+  
     }
 
-    }
+  },[dateProp,to])
 
-  },[date])
-
-  return(<div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
+  return(<div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl" style={{width:"30%"}}>
     <ChartsHeader category="Pie" title="Non-Operational Timing" />
-    <TextField id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" />
+    {/* <TextField id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" /> */}
     {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
-    </div>:<div className="w-full">
-      <PieChart id="chart-pie" data={data} legendVisiblity height="full" />
+    </div>:<div  className="w-full">
+      <PieChart  id="chart-pie" data={data} legendVisiblity height="full" />
     </div>}
   </div>)
 

@@ -1,12 +1,14 @@
 import React,{useState,useEffect} from 'react';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip } from '@syncfusion/ej2-react-charts';
-import { CircularProgress} from '@mui/material'
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip, Export } from '@syncfusion/ej2-react-charts';
+import { Button, CircularProgress} from '@mui/material'
+import * as XLSX from 'xlsx'
+
 import {stackedPrimaryXAxis, stackedPrimaryYAxis } from '../../data/dummy';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { getStackedData } from '../../controllers/apiController';
-import { TextField } from '@mui/material';
+import { TextField} from '@mui/material';
 
-const Stacked = ({ width, height }) => {
+const Stacked = ({ width, height,dateProp,to,setStacked }) => {
   const { currentMode } = useStateContext();
   let token=sessionStorage.getItem("token");
   const [date,setDate]=useState("")
@@ -16,16 +18,17 @@ const Stacked = ({ width, height }) => {
 
   useEffect(async()=>{
     
+    setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getStackedData(token,date)
+      let resp=await getStackedData(token,dateProp,to)
     if(resp){
       setData(resp.message)
       return setLoader(false)
     }
     }
 
-  },[date])
+  },[dateProp,to])
 
 
 
@@ -76,31 +79,58 @@ const Stacked = ({ width, height }) => {
       type: 'StackingColumn',
       background: 'yellow',
     },
+    { dataSource: data[6],
+      xName: 'location',
+      yName: 'totalTime',
+      name: 'Cleaning',
+      type: 'StackingColumn',
+      background: 'cyan',
+    },
+    { dataSource: data[7],
+      xName: 'location',
+      yName: 'totalTime',
+      name: 'Natural gas issue',
+      type: 'StackingColumn',
+      background: 'orange',
+    },
   
   ]:[];
 
+  function exportDataToExcle(){
+    let s=[].concat(...data);
+    s=s.map((elm)=>{
+      return {activity:elm.activity,location:elm.location,totalTime:Number(elm.totalTime)}
+    })
+    const ws = XLSX.utils.json_to_sheet(s);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "LineChartData");
+    
+    XLSX.writeFile(wb, 'stackedChart.xlsx');
+  }
+
   return (
     <>
-    <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" />
+    {/* <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" /> */}
     {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
     <CircularProgress sx={{color:currentColor}}/>
-</div>:<ChartComponent
-      id="charts"
+</div>:<><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Stacked Chart Data </Button><ChartComponent
+      id="stacked"
       primaryXAxis={stackedPrimaryXAxis}
       primaryYAxis={stackedPrimaryYAxis}
-      width={width}
+      width={"100%"}
       height={"500px"}
+      ref={chart => setStacked(chart)}
       chartArea={{ border: { width: 0 } }}
       tooltip={{ enable: true }}
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       legendSettings={{ background: 'white' }}
     >
-      <Inject services={[StackingColumnSeries, Category, Legend, Tooltip]} />
+      <Inject services={[StackingColumnSeries, Category, Legend, Tooltip,Export]} />
       <SeriesCollectionDirective>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         {stackedCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
       </SeriesCollectionDirective>
-    </ChartComponent>}
+    </ChartComponent></>}
     </>
   );
 };

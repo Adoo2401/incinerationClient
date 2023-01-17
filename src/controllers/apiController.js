@@ -47,10 +47,10 @@ export const getIncinerationProgress=async(token)=>{
   }
 }
 
-export const getSummary=async(token,date)=>{
+export const getSummary=async(token,date,to)=>{
   try {
   
-     let resp=await fetch(`${baseURL}/getIncinerationSummary?date=${date}`,{headers:{"authorization":token}})
+     let resp=await fetch(`${baseURL}/getIncinerationSummary?from=${date}&to=${to}`,{headers:{"authorization":token}})
      resp=await resp.json();
   
      if(resp.success){
@@ -64,12 +64,11 @@ export const getSummary=async(token,date)=>{
   }
 }
 
-export const getPieData=async(token,date)=>{
+export const getPieData=async(token,date,to)=>{
   try {
 
-    let resp=await fetch(`${baseURL}/getPieData?date=${date}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getPieData?from=${date}&to=${to}`,{headers:{"authorization":token}})
      resp=await resp.json();
-    
      if(resp.success){
       return resp
      }
@@ -81,10 +80,28 @@ export const getPieData=async(token,date)=>{
   }
 }
 
-export const getStackedData=async(token,date)=>{
+export const getStackedData=async(token,date,to)=>{
   try {
 
-    let resp=await fetch(`${baseURL}/getStackedData?date=${date}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getStackedData?from=${date}&to=${to}`,{headers:{"authorization":token}})
+    resp=await resp.json()
+    console.log(resp);
+     if(resp.success){
+      return resp
+     }
+
+     return false
+    
+  } catch (error) {
+    return false
+  }
+}
+
+export const getLineData=async(token,date,to)=>{
+
+  try {
+
+    let resp=await fetch(`${baseURL}/getLineData?from=${date}&to=${to}`,{headers:{"authorization":token}})
     resp=await resp.json()
      if(resp.success){
       return resp
@@ -97,27 +114,10 @@ export const getStackedData=async(token,date)=>{
   }
 }
 
-export const getLineData=async(token,date)=>{
-
+export const getColorMappingData=async(token,date,to)=>{
   try {
 
-    let resp=await fetch(`${baseURL}/getLineData?date=${date}`,{headers:{"authorization":token}})
-    resp=await resp.json()
-     if(resp.success){
-      return resp
-     }
-
-     return false
-    
-  } catch (error) {
-    return false
-  }
-}
-
-export const getColorMappingData=async(token,date)=>{
-  try {
-
-    let resp=await fetch(`${baseURL}/getColorMappingData?date=${date}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getColorMappingData?from=${date}&to=${to}`,{headers:{"authorization":token}})
     resp=await resp.json()
      if(resp.success){
       return resp
@@ -137,7 +137,6 @@ export const getStackedLineData=async(token,date)=>{
     let resp=await fetch(`${baseURL}/getStackedLineData?date=${date}`,{headers:{"authorization":token}})
 
     resp=await resp.json();
-    console.log(resp);
     if(resp.success){
      return resp
     }
@@ -186,12 +185,13 @@ export const getOperator=async(token)=>{
 }
 
 
-export const getOperatorSumary=async(token,date)=>{
+export const getOperatorSumary=async(token,date,to)=>{
 
   try {
     
-    let resp=await fetch(`${baseURL}/getOperatorSummary?date=${date}`,{headers:{"authorization":token}});
+    let resp=await fetch(`${baseURL}/getOperatorSummary?from=${date}&to=${to}`,{headers:{"authorization":token}});
     resp=await resp.json();
+    console.log(resp);
     if(resp.success){
       return resp
     }
@@ -243,8 +243,77 @@ export const deletee=async(token,id)=>{
     
     let resp=await fetch(`${baseURL}/delete/${id}`,{method:"DELETE",headers:{"authorization":token}});
     resp=await resp.json();
-    console.log(resp);
     if(resp.success){
+      return resp
+    }
+
+    return false
+
+  } catch (error) {
+    return false
+  }
+
+}
+export const getLocation=async(token)=>{
+
+  try {
+    
+    let resp=await fetch(`${baseURL}/getLocation`,{headers:{"authorization":token}});
+    resp=await resp.json();
+    if(resp.success){
+      return resp
+    }
+
+    return false
+
+  } catch (error) {
+    return false
+  }
+
+}
+export const addLocation=async(token,location)=>{
+
+  try {
+    
+    let resp=await fetch(`${baseURL}/addLocation`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({location})});
+    resp=await resp.json();
+    if(resp){
+      return resp
+    }
+
+    return false
+
+  } catch (error) {
+    return false
+  }
+
+}
+export const deleteLocation=async(token,id)=>{
+
+  try {
+    
+    let resp=await fetch(`${baseURL}/deleteLocation/${id}`,{headers:{"authorization":token},method:"DElETE"});
+    resp=await resp.json();
+    if(resp){
+      return resp
+    }
+
+    return false
+
+  } catch (error) {
+    return false
+  }
+
+}
+
+
+export const dashboard=async()=>{
+
+  try {
+    
+    let resp=await fetch(`${baseURL}/dashboard`);
+    resp=await resp.json();
+    if(resp){
       return resp
     }
 

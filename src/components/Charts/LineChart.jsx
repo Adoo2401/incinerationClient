@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, DateTime, Legend, Tooltip,ColumnSeries ,LineSeries, Category} from '@syncfusion/ej2-react-charts';
-
+import { ChartComponent, SeriesCollectionDirective,Zoom, SeriesDirective, Inject, DateTime, Legend, Tooltip,ColumnSeries ,LineSeries, Category, Export} from '@syncfusion/ej2-react-charts';
 import {LinePrimaryXAxis, LinePrimaryYAxis } from '../../data/dummy';
+import * as XLSX from 'xlsx'
 import { useStateContext } from '../../contexts/ContextProvider';
-import { CircularProgress, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { getLineData } from '../../controllers/apiController';
 
-const LineChart = () => {
+const LineChart = ({dateProp,to,line,setLine}) => {
   const { currentMode,currentColor } = useStateContext();
   let token=sessionStorage.getItem("token");
   let [data,setData]=useState([])
@@ -15,19 +15,28 @@ const LineChart = () => {
 
   useEffect(async()=>{
 
+    setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getLineData(token,date)
+      let resp=await getLineData(token,dateProp,to)
     if(resp){
       setData(resp.message)
       return setLoader(false)
     }
     }
 
-  },[date])
+  },[dateProp,to])
+
+  const zoomsettings = {
+    enableMouseWheelZooming: true,
+    enablePinchZooming: true,
+    enableSelectionZooming: true,
+    mode: 'X',
+    enableScrollbar: true,
+};
 
    const lineCustomSeries = data.length>0?[
-    { dataSource:data[0],
+    { dataSource:data[1],
       xName: 'x',
       yName: 'y',
       name: 'Bags Weight',
@@ -35,7 +44,7 @@ const LineChart = () => {
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
   
-    { dataSource:data[1],
+    { dataSource:data[0],
       xName: 'x',
       yName: 'y',
       name: 'Bags Incinerated',
@@ -46,15 +55,29 @@ const LineChart = () => {
   
   ]:[];
 
+  function exportDataToExcle(){
+    
+    const ws = XLSX.utils.json_to_sheet([].concat(...data));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "LineChartData");
+    
+    XLSX.writeFile(wb, 'lineChart.xlsx');
+  }
+
   return (
     <>
-     <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" />
+     {/* <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" /> */}
      {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
     <CircularProgress sx={{color:currentColor}}/>
 </div>:
+    <>
+    <Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button>
     <ChartComponent
       id="line-chart"
       height="420px"
+      width='100%'
+      ref={chart => setLine(chart)}
+      zoomSettings={zoomsettings}
       primaryXAxis={LinePrimaryXAxis}
       // primaryYAxis={LinePrimaryYAxis}
       chartArea={{ border: { width: 0 } }}
@@ -62,14 +85,16 @@ const LineChart = () => {
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       legendSettings={{ background: 'white' }}
     >
-      <Inject services={[ColumnSeries, Tooltip, LineSeries, Category,Legend]} />
+      <Inject services={[ColumnSeries,Zoom, Tooltip, LineSeries, Category,Legend,Export]} />
       <SeriesCollectionDirective>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}
       </SeriesCollectionDirective>
-    </ChartComponent>}
+    </ChartComponent>
+    </>}
       </>
   );
 };
 
 export default LineChart;
+

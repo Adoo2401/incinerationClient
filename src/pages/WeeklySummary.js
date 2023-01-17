@@ -23,23 +23,26 @@ const WeeklySummary = () => {
         let resp=await getStackedLineData(token,date);
     
         if(resp){
+
+
+
           const sixth = date!=""?new Date( new Date(date).getTime()):"";
-          date!=""?sixth.setDate( new Date(date).getDate() - 1):null
-          
+          const fourth = date!=""?new Date( new Date(date).getTime()):"";
           const fifth = date!=""?new Date( new Date(date).getTime()):"";
-        date!=""?fifth.setDate( new Date(date).getDate() - 2):null
+          const third = date!=""?new Date( new Date(date).getTime()):"";
+          const second = date!=""?new Date( new Date(date).getTime()):"";
+          const first = date!=""?new Date( new Date(date).getTime()):"";
 
-        const fourth = date!=""?new Date( new Date(date).getTime()):"";
-        date!=""?fourth.setDate( new Date(date).getDate() - 3):null
+          if(date!=""){
 
-        const third = date!=""?new Date( new Date(date).getTime()):"";
-        date!=""?third.setDate( new Date(date).getDate() - 4):null
+            sixth.setDate( new Date(date).getDate() - 1)
+            fourth.setDate( new Date(date).getDate() - 3)
+            third.setDate( new Date(date).getDate() - 4)
+            second.setDate( new Date(date).getDate() - 5)
+            first.setDate( new Date(date).getDate() - 6)
 
-        const second = date!=""?new Date( new Date(date).getTime()):"";
-        date!=""?second.setDate( new Date(date).getDate() - 5):null
+          }
 
-        const first = date!=""?new Date( new Date(date).getTime()):"";
-        date!=""?first.setDate( new Date(date).getDate() - 6):null
 
         function avg(props){
           return Math.ceil((props.total+7)/7)

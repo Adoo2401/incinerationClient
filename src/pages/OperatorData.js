@@ -28,7 +28,7 @@ const OperatorData = () => {
       <Header category="Page" title="Operators Data" />
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress/>
-      </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:50}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
+      </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 
            {operatorDataGrid.map((item,index)=>

@@ -1,4 +1,4 @@
-export { default as Ecommerce } from './Ecommerce';
+export { default as Dashboard } from './Dashboard';
 export { default as IncinerationProgress } from './IncinerationProgress';
 export { default as ColorMapping } from './Charts/ColorMapping';
 export { default as Line } from './Charts/Line';

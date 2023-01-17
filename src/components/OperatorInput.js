@@ -1,6 +1,6 @@
 import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import React from 'react'
-import {addOperatorData} from '../controllers/apiController'
+import {addOperatorData, getLocation} from '../controllers/apiController'
 import calculateTimeDiff from '../controllers/CalculateTimeDifference'
 import { useStateContext } from '../contexts/ContextProvider';
 import { toast } from 'react-toastify';
@@ -23,7 +23,18 @@ const OperatorInput = () => {
 
     const [totalTime,setTotalTime]=React.useState('00:00');
     const { currentColor} = useStateContext();
+    const [menuItem,setMenuItem]=React.useState([]);
+    const [menuLoader,setMenuLoader]=React.useState(true);
     const [loader,setLoader]=React.useState(false);
+
+
+    React.useEffect(async()=>{
+      let resp=await getLocation(token);
+      if(resp){
+        setMenuItem(resp.message);
+        setMenuLoader(false)
+      }
+    },[])
 
     React.useEffect(()=>{
         if(!data.startTime || !data.endTime)  return
@@ -66,20 +77,11 @@ const OperatorInput = () => {
           label="Location"
           onChange={changeInput}
         >
-          <MenuItem value={"Sialkot"}>Sialkot</MenuItem>
-          <MenuItem value={"Kasur"}>Kasur</MenuItem>
-          <MenuItem value={"Nanakan Sb"}>Nanakan Sb</MenuItem>
-          <MenuItem value={"Gujrat"}>Gujrat</MenuItem>
-          <MenuItem value={"Chiniot"}>Chiniot</MenuItem>
-          <MenuItem value={"Chichawatni"}>Chichawatni</MenuItem>
-          <MenuItem value={"Bahawalpur"}>Bahawalpur</MenuItem>
-          <MenuItem value={"Bhakkar"}>Bhakkar</MenuItem>
-          <MenuItem value={"Vehari"}>Vehari</MenuItem>
-          <MenuItem value={"Arifwala"}>Arifwala</MenuItem>
-          <MenuItem value={"Sheikhupura"}>Sheikhupura</MenuItem>
-          <MenuItem value={"Rajanpur"}>Rajanpur</MenuItem>
-          <MenuItem value={"Gujranwala"}>Gujranwala</MenuItem>
-          <MenuItem value={"Attock"}>Attock</MenuItem>
+           {!menuLoader?
+          menuItem.map((elm)=>
+          <MenuItem value={elm.location}>{elm.location}</MenuItem>
+          )
+          :null}
           
         </Select>
       </FormControl>
