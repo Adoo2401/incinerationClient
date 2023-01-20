@@ -1,31 +1,49 @@
+import { Paper } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
+import BacklogLocations from "./BacklogLocations";
 
 const DashboardList = ({ data,ind }) => {
 
-  let list=["#0081B4",'#9D3C72','#D3756B','#850000']
+  let colors=["#301934","#000000","#023020","#343434","#191970"]
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
 
   return (
-    <div style={{backgroundColor:list[ind]}} className="dashboard__card">
-      <h1>{data.date}</h1>
-      <div>
-        <h2>Collected</h2>
-        <p>
+  <>
+    <Box sx={{display: 'flex',flexWrap: 'wrap','& > :not(style)': {  m: 1,  width: 408,  height: 228,},margin:'10px 0'}}>
+      <Paper elevation={10} style={data.date==="Till Date - In Progress"?{cursor:"pointer"}:{}} onClick={data.date=="Till Date - In Progress"?handleClickOpen:null}>
+      <h1 style={{textAlign:"center",margin:'20px',fontSize:'30px',fontWeight:'900',backgroundColor:colors[ind],color:"white"}}>{data.date}</h1>
+      <div style={{display:"flex",justifyContent:"space-around",margin:"40px"}}>
+       <h2 style={{color:"#000039",fontWeight:500,fontSize:'20px'}}>{data.date==="Till Date - In Progress"?'In Proccess':'Collected'}</h2>
+        <p style={{fontSize:"22px",fontWeight:600}}>
           {data.collected.toLocaleString("en-US", {
             maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}
         </p>
       </div>
-      <div>
-        <h2>Incinerated</h2>
-        <p>
+      {data.date!=="Till Date - In Progress" &&<div style={{display:"flex",justifyContent:"space-around",margin:"40px"}}>
+        <h2 style={{color:"#000039",fontWeight:500,fontSize:'20px'}}>Incinerated</h2>
+        <p style={{fontSize:"22px",fontWeight:600}}>
           {data.incinerated.toLocaleString("en-US", {
             maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}
         </p>
-      </div>
-    </div>
+      </div>}
+      </Paper>
+    </Box>
+    {data.date==="Till Date - In Progress" &&<BacklogLocations open={open} setOpen={setOpen} handleClose={handleClose}/>}
+  </>
   );
 };
 

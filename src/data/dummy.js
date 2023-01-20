@@ -266,9 +266,9 @@ export const incinerationSummaryGrid = [
     width: '100',
   },
   {
-    field: 'bagsWeight',
+    field: 'weightIncinerated',
     textAlign:"Center",
-    headerText: 'Bags Weight',
+    headerText: 'Weight Incinerated',
     width: '100',
   },
 
@@ -280,7 +280,7 @@ export const incinerationSummaryGrid = [
   },
   {
     field:"remarks",
-    width:"100",
+    width:"700",
     headerText:"Remarks",
     textAlign:"Center",
   }
@@ -308,12 +308,6 @@ export const contextMenuItems = [
   'NextPage',
 ];
 
-export const ecomPieChartData = [
-  { x: '2018', y: 18, text: '35%' },
-  { x: '2019', y: 18, text: '15%' },
-  { x: '2020', y: 18, text: '25%' },
-  { x: '2021', y: 18, text: '25%' },
-];
 
 
 
@@ -326,6 +320,7 @@ export const stackedPrimaryXAxis = {
   lineStyle: { width: 0 },
   labelIntersectAction: 'Rotate45',
   valueType: 'Category',
+  zoomFactor:0.3,
 };
 
 export const stackedPrimaryYAxis = {

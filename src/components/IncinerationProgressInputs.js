@@ -20,7 +20,7 @@ const IncinerationProgressInputs = () => {
     let token=sessionStorage.getItem("token")
 
     let [totalTime,setTotalTime]=React.useState("00:00")
-    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,bagsWeight:undefined,operator:undefined,remarks:undefined,wasteCollected:0})
+    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,weightIncinerated:undefined,operator:undefined,remarks:undefined,wasteCollected:0})
 
     React.useEffect(async()=>{
       let resp=await getLocation(token);
@@ -44,11 +44,11 @@ const IncinerationProgressInputs = () => {
     async function handleSubmit(e){
       setLoader(true)
       e.preventDefault();
-      let resp=await addIncinerationProgress({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,wasteCollected:data.wasteCollected?data.wasteCollected:0,remarks:data.remarks?data.remarks:'none',bagsWeight:data.bagsWeight?parseFloat(data.bagsWeight):0},token)
+      let resp=await addIncinerationProgress({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,wasteCollected:data.wasteCollected?data.wasteCollected:0,remarks:data.remarks?data.remarks:'none',weightIncinerated:data.weightIncinerated?parseFloat(data.weightIncinerated):0},token)
       if(resp){
         toast.success("Created");
         setLoader(false)
-        return setData({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,bagsWeight:undefined,operator:undefined,remarks:undefined})
+        return setData({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,weightIncinerated:undefined,operator:undefined,remarks:undefined})
       }
        
       toast.error("Something Went Wrong");
@@ -121,7 +121,7 @@ const IncinerationProgressInputs = () => {
         <TextField style={{marginTop:"20px"}} id="standard-basic"  onChange={changeInput} name="wasteCollected" variant="standard" label="Waste Collected" type="number" />
     </div>
     <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}} > 
-        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='bagsWeight' label="Bags Weight KG" type={'text'} variant="standard" />
+        <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='weightIncinerated' label="Weight Incinerated KG" type={'text'} variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='operator' required label="Operator" variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} name='remarks' label="Remarks"  variant="standard" />
     </div>

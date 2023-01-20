@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react'
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, Tooltip, DataLabel, ColumnSeries } from '@syncfusion/ej2-react-charts';
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, Tooltip, DataLabel, ColumnSeries, Zoom } from '@syncfusion/ej2-react-charts';
 import { Header } from '../../components';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import * as XLSX from 'xlsx'
@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx'
 import { useStateContext } from '../../contexts/ContextProvider';
 import { getColorMappingData } from '../../controllers/apiController';
 
-const ColorMapping = ({dateFrom,to}) => {
+const ColorMapping = ({dateFrom,to,select}) => {
   const {currentColor,currentMode}=useStateContext();
   const [date,setDate]=useState("");
   const [data,setData]=useState([]);
@@ -19,14 +19,14 @@ const ColorMapping = ({dateFrom,to}) => {
     setDate(dateFrom)
     if(date!==''){
       setLoader(true)
-      let resp=await getColorMappingData(token,date,to)
+      let resp=await getColorMappingData(token,dateFrom,to,select)
     if(resp){
       setData(resp.message)
       return setLoader(false)
     }
     }
 
-   },[dateFrom,to])
+   },[dateFrom,to,select])
 
    function exportDataToExcle(){
     
@@ -43,8 +43,16 @@ const ColorMapping = ({dateFrom,to}) => {
         args.fill = seriesColor[args.point.index];
     };
 
+      const zoomsettings = {
+    enableMouseWheelZooming: true,
+    enablePinchZooming: true,
+    enableSelectionZooming: true,
+    mode: 'X',
+    enableScrollbar: true,
+};
+
     
-    const primaryxAxis = { valueType: 'Category', title: 'Locations' };
+    const primaryxAxis = { valueType: 'Category', title: 'Locations',zoomFactor: 0.3 };
     const primaryyAxis = { minimum: 100, maximum: 1000, interval: 100, title: 'Waste Incinerated' };
 
     
@@ -60,8 +68,8 @@ const ColorMapping = ({dateFrom,to}) => {
 </div>:<>
 <Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Color Mapping Data </Button>
 
-<ChartComponent width='100%' tooltip={{enable:true}} legendSettings={{background:"white"}} background={currentMode==="Dark"?"#33373E":"#fff"}  id='colormapping' primaryXAxis={primaryxAxis} primaryYAxis={primaryyAxis} pointRender={pointRender} title='Weekly Incineration'>
-      <Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, Category]}/>
+<ChartComponent zoomSettings={zoomsettings} width='100%' tooltip={{enable:true}} legendSettings={{background:"white"}} background={currentMode==="Dark"?"#33373E":"#fff"}  id='colormapping' primaryXAxis={primaryxAxis} primaryYAxis={primaryyAxis} pointRender={pointRender} title='Weekly Incineration'>
+      <Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, Category,Zoom]}/>
       <SeriesCollectionDirective>
         <SeriesDirective dataSource={data} xName='x' yName='y' name='Waste Incinerated' type='Column'>
         </SeriesDirective>

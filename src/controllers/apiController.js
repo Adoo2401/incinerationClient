@@ -47,12 +47,11 @@ export const getIncinerationProgress=async(token)=>{
   }
 }
 
-export const getSummary=async(token,date,to)=>{
+export const getSummary=async(token,date,to,locations)=>{
   try {
-  
-     let resp=await fetch(`${baseURL}/getIncinerationSummary?from=${date}&to=${to}`,{headers:{"authorization":token}})
+       let resp=await fetch(`${baseURL}/getIncinerationSummary?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})})
      resp=await resp.json();
-  
+     console.log(resp);
      if(resp.success){
       return resp
      }
@@ -64,10 +63,10 @@ export const getSummary=async(token,date,to)=>{
   }
 }
 
-export const getPieData=async(token,date,to)=>{
+export const getPieData=async(token,date,to,locations)=>{
   try {
 
-    let resp=await fetch(`${baseURL}/getPieData?from=${date}&to=${to}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getPieData?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})})
      resp=await resp.json();
      if(resp.success){
       return resp
@@ -80,28 +79,10 @@ export const getPieData=async(token,date,to)=>{
   }
 }
 
-export const getStackedData=async(token,date,to)=>{
+export const getStackedData=async(token,date,to,locations)=>{
   try {
 
-    let resp=await fetch(`${baseURL}/getStackedData?from=${date}&to=${to}`,{headers:{"authorization":token}})
-    resp=await resp.json()
-    console.log(resp);
-     if(resp.success){
-      return resp
-     }
-
-     return false
-    
-  } catch (error) {
-    return false
-  }
-}
-
-export const getLineData=async(token,date,to)=>{
-
-  try {
-
-    let resp=await fetch(`${baseURL}/getLineData?from=${date}&to=${to}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getStackedData?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})})
     resp=await resp.json()
      if(resp.success){
       return resp
@@ -114,10 +95,28 @@ export const getLineData=async(token,date,to)=>{
   }
 }
 
-export const getColorMappingData=async(token,date,to)=>{
+export const getLineData=async(token,date,to,locations)=>{
+
   try {
 
-    let resp=await fetch(`${baseURL}/getColorMappingData?from=${date}&to=${to}`,{headers:{"authorization":token}})
+    let resp=await fetch(`${baseURL}/getLineData?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})})
+    resp=await resp.json()
+
+    if(resp.success){
+      return resp
+     }
+
+     return false
+    
+  } catch (error) {
+    return false
+  }
+}
+
+export const getColorMappingData=async(token,date,to,locations)=>{
+  try {
+
+    let resp=await fetch(`${baseURL}/getColorMappingData?from=${date}&to=${to}`,{headers:{"authorization":token,'Content-Type':'application/json'},method:"POST",body:JSON.stringify({locations})})
     resp=await resp.json()
      if(resp.success){
       return resp
@@ -185,13 +184,12 @@ export const getOperator=async(token)=>{
 }
 
 
-export const getOperatorSumary=async(token,date,to)=>{
+export const getOperatorSumary=async(token,date,to,locations)=>{
 
   try {
     
-    let resp=await fetch(`${baseURL}/getOperatorSummary?from=${date}&to=${to}`,{headers:{"authorization":token}});
+    let resp=await fetch(`${baseURL}/getOperatorSummary?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})});
     resp=await resp.json();
-    console.log(resp);
     if(resp.success){
       return resp
     }
@@ -254,14 +252,14 @@ export const deletee=async(token,id)=>{
   }
 
 }
-export const getLocation=async(token)=>{
+export const getLocation=async(token,onlyunArchive)=>{
 
   try {
     
-    let resp=await fetch(`${baseURL}/getLocation`,{headers:{"authorization":token}});
+    let resp=await fetch(`${baseURL}/getLocation${onlyunArchive?"?onlyunArchive=true":''}`,{headers:{"authorization":token}});
     resp=await resp.json();
     if(resp.success){
-      return resp
+      return resp.message
     }
 
     return false
@@ -288,12 +286,13 @@ export const addLocation=async(token,location)=>{
   }
 
 }
-export const deleteLocation=async(token,id)=>{
+export const updateArchive=async(token,id,change)=>{
 
   try {
     
-    let resp=await fetch(`${baseURL}/deleteLocation/${id}`,{headers:{"authorization":token},method:"DElETE"});
+    let resp=await fetch(`${baseURL}/updateArchive/${id}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"PUT",body:JSON.stringify({change})});
     resp=await resp.json();
+    
     if(resp){
       return resp
     }
@@ -323,4 +322,21 @@ export const dashboard=async()=>{
     return false
   }
 
+}
+
+export const locationWiseData=async()=>{
+  try {
+    
+    let resp=await fetch(`${baseURL}/locationWiseData`);
+    resp=await resp.json();
+    console.log(resp);
+    if(resp){
+      return resp
+    }
+
+    return false
+
+  } catch (error) {
+    return false
+  }
 }

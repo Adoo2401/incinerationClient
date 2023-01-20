@@ -152,8 +152,12 @@ const IncinerationProgress = () => {
     }
     
     const backlog=(props)=>{
+
+      let backlog=props.wasteCollected-props.weightIncinerated
+      backlog=backlog.toFixed(2);
+      backlog=Number(backlog)
       return(
-        <p>{props.wasteCollected-props.bagsWeight}</p>
+        <p>{backlog}</p>
       )
     }
     
@@ -235,9 +239,9 @@ const IncinerationProgress = () => {
         width:'150'
       },
       {
-        field: 'bagsWeight',
+        field: 'weightIncinerated',
         textAlign:"Center",
-        headerText: 'Bags Weight',
+        headerText: 'Weight Incinerated',
         width: '150',
       },
       {

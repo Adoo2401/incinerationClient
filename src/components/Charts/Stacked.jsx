@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip, Export } from '@syncfusion/ej2-react-charts';
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, Legend, Category, StackingColumnSeries, Tooltip, Export, Zoom } from '@syncfusion/ej2-react-charts';
 import { Button, CircularProgress} from '@mui/material'
 import * as XLSX from 'xlsx'
 
@@ -8,7 +8,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { getStackedData } from '../../controllers/apiController';
 import { TextField} from '@mui/material';
 
-const Stacked = ({ width, height,dateProp,to,setStacked }) => {
+const Stacked = ({ width, height,dateProp,to,setStacked ,select}) => {
   const { currentMode } = useStateContext();
   let token=sessionStorage.getItem("token");
   const [date,setDate]=useState("")
@@ -21,17 +21,23 @@ const Stacked = ({ width, height,dateProp,to,setStacked }) => {
     setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getStackedData(token,dateProp,to)
+      let resp=await getStackedData(token,dateProp,to,select)
     if(resp){
       setData(resp.message)
       return setLoader(false)
     }
     }
 
-  },[dateProp,to])
+  },[dateProp,to,select])
 
 
-
+ const zoomsettings = {
+    enableMouseWheelZooming: true,
+    enablePinchZooming: true,
+    enableSelectionZooming: true,
+    mode: 'X',
+    enableScrollbar: true,
+};
   
   const stackedCustomSeries=data.length>0?[
   
@@ -124,8 +130,9 @@ const Stacked = ({ width, height,dateProp,to,setStacked }) => {
       tooltip={{ enable: true }}
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       legendSettings={{ background: 'white' }}
+      zoomSettings={zoomsettings}
     >
-      <Inject services={[StackingColumnSeries, Category, Legend, Tooltip,Export]} />
+      <Inject services={[Zoom,StackingColumnSeries, Category, Legend, Tooltip,Export]} />
       <SeriesCollectionDirective>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         {stackedCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}

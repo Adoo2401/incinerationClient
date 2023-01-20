@@ -6,7 +6,7 @@ import { getOperatorSumary} from '../controllers/apiController';
 import { CircularProgress, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 
-const OperatorSummary = ({dateFrom,to}) => {
+const OperatorSummary = ({dateFrom,to,select}) => {
 
   const [data,setData]=useState([])
   let token=sessionStorage.getItem("token")
@@ -18,7 +18,7 @@ const OperatorSummary = ({dateFrom,to}) => {
     setDate(dateFrom)
     if(date!==""){
         setLoader(true)
-        let resp=await getOperatorSumary(token,dateFrom,to);
+        let resp=await getOperatorSumary(token,dateFrom,to,select);
     if(resp){
   
         setData(resp.message)
@@ -28,16 +28,18 @@ const OperatorSummary = ({dateFrom,to}) => {
     toast.error("Something Went Wrong");
     }
 
-  },[date,to])
+  },[date,to,select])
 
   let grid;
   const toolbarClick = (args) => {
 
     if (grid && args.item.id === 'grid_excelexport') {
         grid.excelExport();
-    }else{
-      grid.pdfExport();
     }
+
+    if (grid && args.item.id === 'grid_pdfexport') {
+      grid.pdfExport();
+  }
 
   }
 

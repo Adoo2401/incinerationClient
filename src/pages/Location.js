@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport} from '@syncfusion/ej2-react-grids'
+import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search} from '@syncfusion/ej2-react-grids'
 import { Header } from '../components';
-import { getLocation,addLocation,deleteLocation} from '../controllers/apiController';
+import { getLocation,addLocation,updateArchive} from '../controllers/apiController';
 import { Button, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
-import { RiDeleteBack2Line } from 'react-icons/ri';
+import { BiArchiveIn, BiArchiveOut } from 'react-icons/bi';
 
 const Location = () => {
 
@@ -12,32 +12,34 @@ const Location = () => {
   let token=sessionStorage.getItem("token")
   const [loader,setLoader]=useState(true);
 
-  async function fetchLocations(){
+  async function fetchLocations(prompt,value){
     let resp=await getLocation(token);
     
     if(resp){
-      setData(resp.message)
+      setData(resp)
       setLoader(false)
+         if(prompt){
+              toast.success(`Successfully ${value?"Archived":"Unarchived"}`);
+         }
     }
   }
   
   useEffect(async()=>{
-      fetchLocations();
+      fetchLocations(false);
   },[])
 
   const location=(props)=>{
     return <p style={{textTransform:'capitalize'}}>{props.location}</p>
   }
 
-  const Delete=(props)=>{
+  const Archive=(props)=>{
 
-    async function del(){
+    async function del(value){
 
-         if(window.confirm("Are you sure you want to delete this location")){
-           let resp=await deleteLocation(token,props._id);
+         if(window.confirm(`Are you sure you want to ${value?"Archived":"Unarchived"} this location`)){
+           let resp=await updateArchive(token,props._id,value);
            if(resp){
-            toast.success("Successfully Deleted");
-            fetchLocations();
+             fetchLocations(true,value);
            }else{
             toast.error("Something Went Wrong");
            }
@@ -45,7 +47,9 @@ const Location = () => {
     }
 
     return(
-        <Button onClick={del} variant='contained' color="error" endIcon={<RiDeleteBack2Line/>}>Delte</Button>
+        <>
+        {props.archive?<Button onClick={()=>del(false)} variant='contained' color="success" endIcon={<BiArchiveOut/>}>UNARCHIVE</Button>:<Button onClick={()=>del(true)} variant='contained' color="error" endIcon={<BiArchiveIn/>}>ARCHIVE</Button>}
+        </>
     )
   }
 
@@ -54,14 +58,15 @@ const Location = () => {
         field:"location",
         template:location,
         headerText:"Locations",
-        textAlign:"center"
+        textAlign:"center",
+        width:'50'
     },
     {
-        field: 'Delete',
-        template:Delete,
+        field: 'Archive',
+        template:Archive,
         textAlign:"Center",
-        headerText: 'Delete',
-        width: '150',
+        headerText: 'Archive',
+        width: '50',
       },
   ]
 

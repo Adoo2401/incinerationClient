@@ -8,7 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { update,getSingle } from '../controllers/apiController';
+import { update,getSingle, getLocation } from '../controllers/apiController';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Header } from '../components';
@@ -17,13 +17,14 @@ const EditIncinerationProgress = () => {
 
     const { currentColor} = useStateContext();
     const [loader,setLoader]=React.useState(true);
+    const [locations,setLocations]=React.useState([]);
     const navigate=useNavigate();
     const {id}=useParams();
     
     let token=sessionStorage.getItem("token")
 
     let [totalTime,setTotalTime]=React.useState("00:00")
-    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,bagsWeight:undefined,operator:undefined,remarks:undefined})
+    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,weightIncinerated:undefined,operator:undefined,remarks:undefined})
 
     
 
@@ -34,9 +35,13 @@ const EditIncinerationProgress = () => {
 
     useEffect(async()=>{
       let resp=await getSingle(token,id);
+      let locations=await getLocation(token,true)
       if(resp){
         setData(resp.message);
         setLoader(false)
+      }
+      if(locations){
+        setLocations(locations)
       }
     },[])
 
@@ -49,7 +54,7 @@ const EditIncinerationProgress = () => {
     async function handleSubmit(e){
       setLoader(true)
       e.preventDefault();
-      let resp=await update({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,remarks:data.remarks?data.remarks:'none',bagsWeight:data.bagsWeight?parseFloat(data.bagsWeight):0},token,id)
+      let resp=await update({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,remarks:data.remarks?data.remarks:'none',weightIncinerated:data.weightIncinerated?parseFloat(data.weightIncinerated):0},token,id)
       if(resp){
         toast.success("Update");
         setLoader(false)
@@ -80,20 +85,9 @@ const EditIncinerationProgress = () => {
           label="Location"
           onChange={changeInput}
         >
-          <MenuItem  value={"sialkot"}>Sialkot</MenuItem>
-          <MenuItem value={"kasur"}>Kasur</MenuItem>
-          <MenuItem value={"nanakan Sb"}>Nanakan Sb</MenuItem>
-          <MenuItem value={"gujrat"}>Gujrat</MenuItem>
-          <MenuItem value={"chiniot"}>Chiniot</MenuItem>
-          <MenuItem value={"chichawatni"}>Chichawatni</MenuItem>
-          <MenuItem value={"bahawalpur"}>Bahawalpur</MenuItem>
-          <MenuItem value={"bhakkar"}>Bhakkar</MenuItem>
-          <MenuItem value={"vehari"}>Vehari</MenuItem>
-          <MenuItem value={"arifwala"}>Arifwala</MenuItem>
-          <MenuItem value={"sheikhupura"}>Sheikhupura</MenuItem>
-          <MenuItem value={"rajanpur"}>Rajanpur</MenuItem>
-          <MenuItem value={"gujranwala"}>Gujranwala</MenuItem>
-          <MenuItem value={"attock"}>Attock</MenuItem>
+          {locations.length>0 && locations.map((elm)=>(
+            <MenuItem key={elm.location}  value={elm.location}>{elm.location}</MenuItem>
+          ))}
           
         </Select>
       </FormControl>
@@ -137,7 +131,7 @@ const EditIncinerationProgress = () => {
         <TextField style={{marginTop:"20px"}} id="standard-basic"  onChange={changeInput} name='bagsIncinerated' value={data.bagsIncinerated} variant="standard" label="Bags Incinerated" type="number" />
     </div>
     <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}} > 
-        <TextField id="standard-basic" value={data.bagsWeight} style={{marginTop:"20px"}}  onChange={changeInput} name='bagsWeight' label="Bags Weight KG" type={'text'} variant="standard" />
+        <TextField id="standard-basic" value={data.weightIncinerated} style={{marginTop:"20px"}}  onChange={changeInput} name='weightIncinerated' label="Weight Incinerated KG" type={'text'} variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}} value={data.operator}  onChange={changeInput} name='operator' required label="Operator" variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} value={data.remarks} name='remarks' label="Remarks"  variant="standard" />
     </div>

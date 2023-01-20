@@ -19,7 +19,6 @@ const Dashboard = () => {
     
     let resp=await dashboard();
     if(resp){
-      console.log(resp);
       setData(resp.message)
       setLoader(false)
     }else{

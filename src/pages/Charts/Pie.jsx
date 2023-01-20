@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useStateContext } from '../../contexts/ContextProvider';
 
-const Pie = ({dateProp,to}) => {
+const Pie = ({dateProp,to,select}) => {
   let token=sessionStorage.getItem("token");
   const [date,setDate]=useState("")
   const [data,setData]=useState([])
@@ -20,7 +20,7 @@ const Pie = ({dateProp,to}) => {
     setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getPieData(token,dateProp,to)
+      let resp=await getPieData(token,dateProp,to,select)
 
     if(resp.message!='Incomplete'){
       setData(resp.message)
@@ -30,7 +30,7 @@ const Pie = ({dateProp,to}) => {
   
     }
 
-  },[dateProp,to])
+  },[dateProp,to,select])
 
   return(<div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl" style={{width:"30%"}}>
     <ChartsHeader category="Pie" title="Non-Operational Timing" />

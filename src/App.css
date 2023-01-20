@@ -67,7 +67,7 @@ input[type="datetime-local"]:in-range::-webkit-datetime-edit-year-field, input[t
   margin: 10px;
   min-height: 500px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-content: space-around;
   align-items: center;
   flex-wrap: wrap;

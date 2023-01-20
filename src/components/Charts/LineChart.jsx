@@ -6,7 +6,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import { getLineData } from '../../controllers/apiController';
 
-const LineChart = ({dateProp,to,line,setLine}) => {
+const LineChart = ({dateProp,to,line,setLine,select}) => {
   const { currentMode,currentColor } = useStateContext();
   let token=sessionStorage.getItem("token");
   let [data,setData]=useState([])
@@ -18,14 +18,14 @@ const LineChart = ({dateProp,to,line,setLine}) => {
     setDate(dateProp)
     if(date!==''){
       setLoader(true)
-      let resp=await getLineData(token,dateProp,to)
+      let resp=await getLineData(token,dateProp,to,select)
     if(resp){
       setData(resp.message)
       return setLoader(false)
     }
     }
 
-  },[dateProp,to])
+  },[dateProp,to,select])
 
   const zoomsettings = {
     enableMouseWheelZooming: true,
@@ -39,7 +39,7 @@ const LineChart = ({dateProp,to,line,setLine}) => {
     { dataSource:data[1],
       xName: 'x',
       yName: 'y',
-      name: 'Bags Weight',
+      name: 'Weight Incinerated',
       width: '2',
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
