@@ -19,10 +19,10 @@ const DashboardList = ({ data,ind }) => {
 
   return (
   <>
-    <Box sx={{display: 'flex',flexWrap: 'wrap','& > :not(style)': {  m: 1,  width: 408,  height: 228,},margin:'10px 0'}}>
+    <Box sx={{display: 'flex',flexWrap: 'wrap','& > :not(style)': {  m: 1,  width: 408,  height: 328,},margin:'10px 0'}}>
       <Paper elevation={10} style={data.date==="Till Date - In Progress"?{cursor:"pointer"}:{}} onClick={data.date=="Till Date - In Progress"?handleClickOpen:null}>
       <h1 style={{textAlign:"center",margin:'20px',fontSize:'30px',fontWeight:'900',backgroundColor:colors[ind],color:"white"}}>{data.date}</h1>
-      <div style={{display:"flex",justifyContent:"space-around",margin:"40px"}}>
+      <div style={{display:"flex",justifyContent:"space-around",margin:"60px"}}>
        <h2 style={{color:"#000039",fontWeight:500,fontSize:'20px'}}>{data.date==="Till Date - In Progress"?'In Proccess':'Collected'}</h2>
         <p style={{fontSize:"22px",fontWeight:600}}>
           {data.collected.toLocaleString("en-US", {
@@ -31,7 +31,7 @@ const DashboardList = ({ data,ind }) => {
           })}
         </p>
       </div>
-      {data.date!=="Till Date - In Progress" &&<div style={{display:"flex",justifyContent:"space-around",margin:"40px"}}>
+      {data.date!=="Till Date - In Progress" &&<div style={{display:"flex",justifyContent:"space-around",margin:"60px"}}>
         <h2 style={{color:"#000039",fontWeight:500,fontSize:'20px'}}>Incinerated</h2>
         <p style={{fontSize:"22px",fontWeight:600}}>
           {data.incinerated.toLocaleString("en-US", {
