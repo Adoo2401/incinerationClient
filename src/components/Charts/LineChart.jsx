@@ -16,7 +16,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
   useEffect(async()=>{
 
     setDate(dateProp)
-    if(date!==''){
+    if(dateProp!=='' && to!=""){
       setLoader(true)
       let resp=await getLineData(token,dateProp,to,select)
     if(resp){
@@ -39,7 +39,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
     { dataSource:data[1],
       xName: 'x',
       yName: 'y',
-      name: 'Weight Incinerated',
+      name: 'Waste Incinerated',
       width: '2',
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
@@ -48,6 +48,13 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
       xName: 'x',
       yName: 'y',
       name: 'Bags Incinerated',
+      width: '2',
+      marker: { visible: true, width: 10, height: 10 },
+      type: 'Line' },
+    { dataSource:data[2],
+      xName: 'x',
+      yName: 'y',
+      name: 'Waste Collected',
       width: '2',
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
@@ -66,12 +73,11 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
 
   return (
     <>
-     {/* <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" /> */}
      {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
     <CircularProgress sx={{color:currentColor}}/>
 </div>:
     <>
-    <Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button>
+    <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>
     <ChartComponent
       id="line-chart"
       height="420px"
@@ -79,7 +85,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
       ref={chart => setLine(chart)}
       zoomSettings={zoomsettings}
       primaryXAxis={LinePrimaryXAxis}
-      // primaryYAxis={LinePrimaryYAxis}
+      primaryYAxis={LinePrimaryYAxis}
       chartArea={{ border: { width: 0 } }}
       tooltip={{ enable: true }}
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}

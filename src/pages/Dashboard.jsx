@@ -11,13 +11,14 @@ import { dashboard } from "../controllers/apiController";
 const Dashboard = () => {
   const { currentColor, currentMode } = useStateContext();
   const [loader,setLoader]=useState(true);
+  const token=sessionStorage.getItem("token");
   
 
   const [data, setData] = useState([]);
 
   useEffect(async()=>{
     
-    let resp=await dashboard();
+    let resp=await dashboard(token);
     if(resp){
       setData(resp.message)
       setLoader(false)

@@ -11,15 +11,13 @@ import { TextField} from '@mui/material';
 const Stacked = ({ width, height,dateProp,to,setStacked ,select}) => {
   const { currentMode } = useStateContext();
   let token=sessionStorage.getItem("token");
-  const [date,setDate]=useState("")
   const [data,setData]=useState([])
   const [loader,setLoader]=useState(false)
   const { currentColor} = useStateContext();
 
   useEffect(async()=>{
     
-    setDate(dateProp)
-    if(date!==''){
+    if(dateProp!=='' && to!=""){
       setLoader(true)
       let resp=await getStackedData(token,dateProp,to,select)
     if(resp){
@@ -116,7 +114,6 @@ const Stacked = ({ width, height,dateProp,to,setStacked ,select}) => {
 
   return (
     <>
-    {/* <TextField  style={{marginBottom:"10px"}} id="standard-basic" onChange={(e)=>setDate(e.target.value)} name='date' required  type='date' label="Date" variant="standard" /> */}
     {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
     <CircularProgress sx={{color:currentColor}}/>
 </div>:<><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Stacked Chart Data </Button><ChartComponent

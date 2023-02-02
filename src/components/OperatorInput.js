@@ -31,7 +31,7 @@ const OperatorInput = () => {
     React.useEffect(async()=>{
       let resp=await getLocation(token);
       if(resp){
-        setMenuItem(resp.message);
+        setMenuItem(resp);
         setMenuLoader(false)
       }
     },[])

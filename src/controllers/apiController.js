@@ -9,9 +9,9 @@ export const addIncinerationProgress =async(data,token)=>{
     if(resp.success){
       return resp;
     }
-    return false
+    return resp
   } catch (error) {
-    return false
+    return error.message;
   }
 }
 
@@ -51,7 +51,6 @@ export const getSummary=async(token,date,to,locations)=>{
   try {
        let resp=await fetch(`${baseURL}/getIncinerationSummary?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})})
      resp=await resp.json();
-     console.log(resp);
      if(resp.success){
       return resp
      }
@@ -306,11 +305,11 @@ export const updateArchive=async(token,id,change)=>{
 }
 
 
-export const dashboard=async()=>{
+export const dashboard=async(token)=>{
 
   try {
     
-    let resp=await fetch(`${baseURL}/dashboard`);
+    let resp=await fetch(`${baseURL}/dashboard`,{headers:{"Authorization":token}});
     resp=await resp.json();
     if(resp){
       return resp
@@ -324,17 +323,33 @@ export const dashboard=async()=>{
 
 }
 
-export const locationWiseData=async()=>{
+export const locationWiseData=async(token)=>{
   try {
     
-    let resp=await fetch(`${baseURL}/locationWiseData`);
+    let resp=await fetch(`${baseURL}/locationWiseData`,{headers:{"Authorization":token}});
     resp=await resp.json();
-    console.log(resp);
     if(resp){
       return resp
     }
 
     return false
+
+  } catch (error) {
+    return false
+  }
+}
+
+export const changePassword=async(token,data)=>{
+  try {
+    
+    let resp=await fetch(`${baseURL}/updatePassword`,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify(data)});
+    resp=await resp.json();
+    
+    if(resp){
+      return resp
+    }
+
+    return false;
 
   } catch (error) {
     return false

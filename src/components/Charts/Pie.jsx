@@ -12,7 +12,7 @@ const Doughnut = ({ id, data, legendVisiblity, height }) => {
     if(args.point.y!==0){
       
       let value = args.point.y / args.series.sumOfPoints * 100;
-      args.text = args.point.x + '' + Math.ceil(value) + '' + '%';
+      args.text = args.point.x + ' ' + Math.ceil(value) + ''+ '%';
     }
   }
 
@@ -27,31 +27,35 @@ const Doughnut = ({ id, data, legendVisiblity, height }) => {
 
   return (
     <>
-    <Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Pie Chart Data</Button>
+    <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Pie Chart Data</Button></div>
     <AccumulationChartComponent
       id={id}
-      legendSettings={{ visible: legendVisiblity, background: 'white' }}
+      legendSettings={{ visible: legendVisiblity, background: 'white',showZero:false }}
       width="100%"
       height={height}
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       tooltip={{ enable: true }}
       tooltipRender={tooltipRender}
+
     >
       <Inject services={[AccumulationLegend, PieSeries, AccumulationDataLabel, AccumulationTooltip]} />
       <AccumulationSeriesCollectionDirective>
         <AccumulationSeriesDirective
+
           name="Non-operational Timing"
           dataSource={data}
+          show
           xName="x"
           yName="y"
           innerRadius="40%"
           startAngle={0}
           endAngle={360}
-          radius="70%"
+          radius="100%"
           explode
           explodeOffset="10%"
           explodeIndex={2}
           dataLabel={{
+            showZero:false,
             visible: true,
             name: 'text',
             position: 'Inside',

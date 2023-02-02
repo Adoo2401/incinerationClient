@@ -1,10 +1,4 @@
 import React from 'react';
-import { BsStack } from 'react-icons/bs';
-import {IoMdAdd} from 'react-icons/io'
-import { RiDashboard2Fill } from 'react-icons/ri';
-import { GrUserWorker } from 'react-icons/gr';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { GoDatabase } from 'react-icons/go';
 
 
 
@@ -48,57 +42,16 @@ export const LinePrimaryXAxis = {
 export const LinePrimaryYAxis = {
   labelFormat: '{value}',
   rangePadding: 'None',
-  minimum: 1000,
-  maximum: 8000,
-  interval: 500,
+  minimum: 0,
+  maximum: 10000,
+  interval: 1000,
   lineStyle: { width: 0 },
   majorTickLines: { width: 0 },
   minorTickLines: { width: 0 },
 };
 
 
-export const links = [
-  {
-    title: 'Dashboard',
-    links: [
-      {
-        name:"dashboard",
-        icon:<RiDashboard2Fill/>
-      }
-    ],
-  },
 
-  {
-    title: 'Pages',
-    links: [
-      {
-        name: 'Incineration Progress',
-        icon: <GoDatabase />,
-      },
-      {
-        name:"Add Incineration Progress",
-        icon:<IoMdAdd/>
-      },
-      {
-        name:"Locations",
-        icon:<FaMapMarkerAlt/>
-      },
-      {
-        name:"Add Operator Data",
-        icon:<GrUserWorker/>
-      },
-      {
-        name:"Operators Data",
-        icon: <GoDatabase />,
-      },
-      {
-        name:"Summary",
-        icon:<BsStack/>
-      },
-    ],
-  },
-
-];
 
 export const themeColors = [
   {
@@ -232,7 +185,15 @@ export const operatorDataGrid=[
 ]
 
 
+const locationSummary=(props)=>{
 
+  let upperCase = props.location.replace(/\b[a-z]/g, function(letter) {
+    return letter.toUpperCase();
+  });
+  return(
+    <p>{upperCase}</p>
+  )
+}
 
 
 export const incinerationSummaryGrid = [
@@ -240,7 +201,8 @@ export const incinerationSummaryGrid = [
     field:"location",
     textAlign:"Center",
     headerText: 'Locations',
-    width: '100',
+    width: '200',
+    template:locationSummary
   },
   {
     field: 'preHeating',
@@ -256,7 +218,7 @@ export const incinerationSummaryGrid = [
   {
     field: 'total',
     textAlign:"Center",
-    headerText: 'Total',
+    headerText: 'Total Time',
     width: '100',
   },
   {
@@ -268,19 +230,19 @@ export const incinerationSummaryGrid = [
   {
     field: 'weightIncinerated',
     textAlign:"Center",
-    headerText: 'Weight Incinerated',
-    width: '100',
+    headerText: 'Waste Incinerated',
+    width: '200',
   },
 
   {
     field: 'average',
     textAlign:"Center",
     headerText: 'Average Wt/hour',
-    width: '100',
+    width: '200',
   },
   {
     field:"remarks",
-    width:"700",
+    width:"400",
     headerText:"Remarks",
     textAlign:"Center",
   }
@@ -325,9 +287,9 @@ export const stackedPrimaryXAxis = {
 
 export const stackedPrimaryYAxis = {
   lineStyle: { width: 0 },
-  minimum: 4,
+  minimum: 1,
   maximum: 60,
-  interval: 4,
+  interval: 3,
   majorTickLines: { width: 0 },
   majorGridLines: { width: 1 },
   minorGridLines: { width: 1 },

@@ -24,7 +24,7 @@ const EditIncinerationProgress = () => {
     let token=sessionStorage.getItem("token")
 
     let [totalTime,setTotalTime]=React.useState("00:00")
-    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,weightIncinerated:undefined,operator:undefined,remarks:undefined})
+    const [data,setData]=React.useState({date:undefined,location:undefined,start:undefined,end:undefined,totalTime,status:undefined,activity:undefined,shutdownNature:undefined,reason:undefined,bagsIncinerated:undefined,weightIncinerated:undefined,operator:undefined,remarks:undefined,wasteCollected:undefined})
 
     
 
@@ -54,7 +54,7 @@ const EditIncinerationProgress = () => {
     async function handleSubmit(e){
       setLoader(true)
       e.preventDefault();
-      let resp=await update({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,remarks:data.remarks?data.remarks:'none',weightIncinerated:data.weightIncinerated?parseFloat(data.weightIncinerated):0},token,id)
+      let resp=await update({...data,totalTime,date:new Date(data.date),shutdownNature:data.shutdownNature?data.shutdownNature:"none",reason:data.reason?data.reason:"none",bagsIncinerated:data.bagsIncinerated?data.bagsIncinerated:0,remarks:data.remarks?data.remarks:'none',weightIncinerated:data.weightIncinerated?parseFloat(data.weightIncinerated):0,wasteCollected:data.wasteCollected?data.wasteCollected:0},token,id)
       if(resp){
         toast.success("Update");
         setLoader(false)
@@ -131,7 +131,9 @@ const EditIncinerationProgress = () => {
         <TextField style={{marginTop:"20px"}} id="standard-basic"  onChange={changeInput} name='bagsIncinerated' value={data.bagsIncinerated} variant="standard" label="Bags Incinerated" type="number" />
     </div>
     <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr",marginTop:"20px"}} > 
-        <TextField id="standard-basic" value={data.weightIncinerated} style={{marginTop:"20px"}}  onChange={changeInput} name='weightIncinerated' label="Weight Incinerated KG" type={'text'} variant="standard" />
+       <TextField style={{marginTop:"20px"}} id="standard-basic" value={data.wasteCollected}  onChange={changeInput} name="wasteCollected" variant="standard" label="Waste Collected" type="number" />
+
+        <TextField id="standard-basic" value={data.weightIncinerated} style={{marginTop:"20px"}}  onChange={changeInput} name='weightIncinerated' label="Waste Incinerated KG" type={'text'} variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}} value={data.operator}  onChange={changeInput} name='operator' required label="Operator" variant="standard" />
         <TextField id="standard-basic" style={{marginTop:"20px"}}  onChange={changeInput} value={data.remarks} name='remarks' label="Remarks"  variant="standard" />
     </div>

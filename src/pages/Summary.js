@@ -71,8 +71,8 @@ const Summary = () => {
       <FilterLocations select={select} setSelect={setSelect}/>
        {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
-    </div>:<div style={{width:"100%",display:"flex",justifyContent:"space-around",flexWrap:'wrap',marginTop:"20px"}}>
-      <GridComponent ref={g => grid = g} id='grid' allowTextWrap={true} dataSource={data} allowPdfExport={true} allowExcelExport={true} width="50%" toolbarClick={toolbarClick} toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering >
+    </div>:
+      <GridComponent style={{marginTop:"20px"}} ref={g => grid = g} id='grid' allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} allowExcelExport={true} toolbarClick={toolbarClick} toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering >
         <ColumnsDirective>
 
            {incinerationSummaryGrid.map((item,index)=>
@@ -83,18 +83,10 @@ const Summary = () => {
         </ColumnsDirective>
         <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort,PdfExport,ExcelExport]} />
       </GridComponent>
-      <OperatorSummary select={select} dateFrom={date} to={to}/>
-      </div>
       }
 
-
-    
-    
-    {date!="" && to!=""?<div style={{display:'flex',alignItems:"center",alignContent:"center",justifyContent:"space-between",width:'100%',flexWrap:"wrap"}}><ColorMapping select={select} dateFrom={date} to={to}/><Line select={select} line={line} setLine={setLine} dateProp={date} to={to}/></div>:null}
-    {date!="" && to!=""?<div style={{display:'flex',alignItems:"center",alignContent:"center",justifyContent:"space-between",width:'100%',flexWrap:"wrap"}}><Stacked select={select} setStacked={setStacked} to={to} dateProp={date}/><Pie select={select} to={to} dateProp={date}/></div>:null}
+    {loader?null:<><div style={{display:'flex',alignItems:"center",alignContent:"center",justifyContent:"space-between",width:'100%',flexWrap:"wrap"}}><Pie select={select} to={to} dateProp={date}/><Line select={select} line={line} setLine={setLine} dateProp={date} to={to}/></div></>}
   
-
-
     </div>
   );
 };

@@ -25,7 +25,7 @@ export default function BacklogLocations({open,handleClose}) {
     const [loader,setLoader]=React.useState(true);
 
     async function fetchData(){
-        let response=await locationWiseData();
+        let response=await locationWiseData(sessionStorage.getItem("token"));
         if(response){
             setData(response.message)
             setLoader(false)

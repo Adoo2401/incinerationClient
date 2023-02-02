@@ -9,15 +9,13 @@ import { getColorMappingData } from '../../controllers/apiController';
 
 const ColorMapping = ({dateFrom,to,select}) => {
   const {currentColor,currentMode}=useStateContext();
-  const [date,setDate]=useState("");
   const [data,setData]=useState([]);
   const [loader,setLoader]=useState(false);
   const token=sessionStorage.getItem("token")
 
    useEffect(async()=>{
 
-    setDate(dateFrom)
-    if(date!==''){
+    if(dateFrom!=='' && to!=""){
       setLoader(true)
       let resp=await getColorMappingData(token,dateFrom,to,select)
     if(resp){
@@ -60,7 +58,7 @@ const ColorMapping = ({dateFrom,to,select}) => {
   return (
     <div className='m-4 md:m-10 mt-24 p-10 dark:bg-secondary-dark-bg bg-white rounded-3xl' style={{width:"45%"}}>
 
-    <Header category={"Chart"} title="Weekly Incineration"/>
+    <Header category={"Chart"} title="Color Mapping"/>
 
 
     {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>

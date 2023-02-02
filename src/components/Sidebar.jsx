@@ -5,17 +5,71 @@ import { MdOutlineCancel } from 'react-icons/md';
 import { HiFire } from 'react-icons/hi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
+import { RiDashboard2Fill, RiLockPasswordFill } from 'react-icons/ri';
+import { GoDatabase } from 'react-icons/go';
+import { IoMdAdd } from 'react-icons/io';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { GrUserWorker } from 'react-icons/gr';
+import { BsStack } from 'react-icons/bs';
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } = useStateContext();
+  let auth=JSON.parse(sessionStorage.getItem("user"));
+
 
   const handleCloseSideBar = () => {
     if (activeMenu !== undefined && screenSize <= 900) {
       setActiveMenu(false);
     }
   };
+
+   const links = [
+    {
+      title: 'Dashboard',
+      links: [
+        {
+          name:"dashboard",
+          icon:<RiDashboard2Fill/>
+        }
+      ],
+    },
+  
+    auth?.role==='admin'?{
+      title: 'Pages',
+      links: [
+        {
+          name: 'Incineration Progress',
+          icon: <GoDatabase />,
+        },
+        {
+          name:"Add Incineration Progress",
+          icon:<IoMdAdd/>
+        },
+        {
+          name:"Locations",
+          icon:<FaMapMarkerAlt/>
+        },
+        {
+          name:"Add Operator Data",
+          icon:<GrUserWorker/>
+        },
+        {
+          name:"Operators Data",
+          icon: <GoDatabase />,
+        },
+        {
+          name:"Summary",
+          icon:<BsStack/>
+        },
+        {
+          name:"Change Password",
+          icon:<RiLockPasswordFill/>
+        }
+      ],
+    }:{title:'',links:[]},
+  
+  ];
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white  text-md m-2';
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';

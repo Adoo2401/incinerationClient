@@ -4,11 +4,11 @@ import {Outlet,Navigate} from 'react-router-dom'
 
 const Protect = () => {
 
-    const auth=sessionStorage.getItem("user");
+    let auth=JSON.parse(sessionStorage.getItem("user"));
 
   return (
     <>
-    {auth?<Outlet/>:<Navigate to={"/login"}/>}
+    {auth.role=="admin"?<Outlet/>:<Navigate to={"/login"}/>}
     </>
   )
 }

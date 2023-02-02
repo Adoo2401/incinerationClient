@@ -241,7 +241,7 @@ const IncinerationProgress = () => {
       {
         field: 'weightIncinerated',
         textAlign:"Center",
-        headerText: 'Weight Incinerated',
+        headerText: 'Waste Incinerated',
         width: '150',
       },
       {

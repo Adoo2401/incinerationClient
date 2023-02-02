@@ -18,7 +18,7 @@ export default function LocationData({data}) {
             <TableCell align="center">Backlog</TableCell>
             <TableCell align="center">Bags Incinerated</TableCell>
             <TableCell align="center">Waste Collected</TableCell>
-            <TableCell align="center">Weight Incinerated</TableCell>
+            <TableCell align="center">Waste Incinerated</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -28,12 +28,13 @@ export default function LocationData({data}) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row" align="center">
-                {element.location}
+                {element.location.replace(/\b[a-z]/g,function(letter) {return letter.toUpperCase()})}
               </TableCell>
               <TableCell align="center">{element.backlog}</TableCell>
               <TableCell align="center">{element.bagsIncinerated}</TableCell>
               <TableCell align="center">{element.wasteCollected}</TableCell>
               <TableCell align="center">{element.weightIncinerated}</TableCell>
+
             </TableRow>
           ))}
         </TableBody>
