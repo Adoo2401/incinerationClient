@@ -30,7 +30,7 @@ const Pie = ({dateProp,to,select}) => {
 
   },[dateProp,to,select])
 
-  return(<div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl" style={{width:"30%"}}>
+  return(<div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl" style={{width:'40%'}}>
     <ChartsHeader category="Pie" title="Non-Operational Timing" />
     {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>

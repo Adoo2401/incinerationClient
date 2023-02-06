@@ -104,3 +104,25 @@ input[type="datetime-local"]:in-range::-webkit-datetime-edit-year-field, input[t
   font-size: 25px;
   font-weight: bold;
 }
+
+
+.e-grid .e-headercell {
+  color: #F8EDE3;
+  font-weight: bolder;
+  background-color:#A555EC;
+}
+
+.e-grid .e-headercelldiv {
+  /* font-weight: 700; */
+}
+.e-grid .e-rowcell.e-selectionbackground {
+  background-color: #F3CCFF;
+}
+
+.e-grid .e-row {
+  /* background-color: #D09CFA; */
+}
+
+.e-grid .e-row:hover .e-rowcell {
+  background-color: #F3CCFF !important;
+}

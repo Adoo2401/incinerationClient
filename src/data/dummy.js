@@ -208,24 +208,24 @@ export const incinerationSummaryGrid = [
     field: 'preHeating',
     textAlign:"Center",
     headerText: 'Pre Heating',
-    width: '100',
+    width: '130',
   },
   { field: 'incineration',
   textAlign:"Center",
     headerText: 'Incineration',
-    width: '100',
+    width: '150',
   },
   {
     field: 'total',
     textAlign:"Center",
     headerText: 'Total Time',
-    width: '100',
+    width: '130',
   },
   {
     headerText: 'Bags',
     textAlign:"Center",
     field: 'bags',
-    width: '100',
+    width: '130',
   },
   {
     field: 'weightIncinerated',
@@ -242,7 +242,7 @@ export const incinerationSummaryGrid = [
   },
   {
     field:"remarks",
-    width:"400",
+    width:"300",
     headerText:"Remarks",
     textAlign:"Center",
   }

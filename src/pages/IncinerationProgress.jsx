@@ -18,9 +18,12 @@ const IncinerationProgress = () => {
 
   async function getData(){
     let resp=await getIncinerationProgress(token);
-    
     if(resp){
-      setData(resp.message)
+      setData(()=>{
+        return resp.message.map((elm)=>{
+          return {...elm,date:new Date(elm.date)};
+        })
+      })
       setLoader(false)
     }
 
@@ -160,14 +163,25 @@ const IncinerationProgress = () => {
         <p>{backlog}</p>
       )
     }
+
+    const dateFormat=(props)=>{
+      let formatedDate=props.date.toString();
+      formatedDate=formatedDate.substring(0,15);
+      return(
+        <p>{formatedDate}</p>
+      )
+    }
     
     setGrid([
       {
-        field:"dateFormat",
+        field:"date",
         textAlign:"Center",
         headerText: 'Date',
-        // template:dateFormat,
+        template:dateFormat,
         width: '150',
+        FontAttributes:"Bold",
+        TextColor:"Black" ,
+        BackgroundColor:"Gray"
       },
       {
         field: 'location',

@@ -30,7 +30,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
   const zoomsettings = {
     enableMouseWheelZooming: true,
     enablePinchZooming: true,
-    enableSelectionZooming: true,
+    enableSelectionZooming: false,
     mode: 'X',
     enableScrollbar: true,
 };
@@ -62,6 +62,8 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
   
   ]:[];
 
+  const palette = ["#E94649", "#F6B53F", "#6FAAB0", "#C4C24A"];
+
   function exportDataToExcle(){
     
     const ws = XLSX.utils.json_to_sheet([].concat(...data));
@@ -79,6 +81,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
     <>
     <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>
     <ChartComponent
+      palettes={palette}
       id="line-chart"
       height="420px"
       width='100%'
