@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import Summary from './pages/Summary'
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
-import { Dashboard, IncinerationProgress, Stacked, Line, Pie, ColorMapping } from './pages';
+import { Dashboard, IncinerationProgress } from './pages';
 import ManagerRoutes from './secure/ManagerRoutes'
 import './App.css';
-import WeeklySummary from './pages/WeeklySummary'
 import Location from './pages/Location'
 import { useStateContext } from './contexts/ContextProvider';
 import AddIncinerationProgress from './pages/AddIncinerationProgress';
@@ -15,9 +12,7 @@ import AdminRoutes from './secure/AdminRoutes';
 import Login from './pages/Login';
 import AddOperator from './pages/AddOperator';
 import OperatorDatas from './pages/OperatorData';
-import OperatorSummary from './pages/operatorSummary';
 import EditIncinerationProgress from './pages/EditIncinerationProgress';
-import baseURL from './baseURL';
 import PasswordChange from './pages/PasswordChange';
 
 const App = () => {
@@ -45,6 +40,7 @@ useEffect(()=>{
   },5000)
 
 },[])
+
 
   return (
     <div  data-aos="zoom-in-left" data-aos-duration="1000" className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -96,10 +92,8 @@ useEffect(()=>{
                     <Route path="/Summary" element={<Summary/>}/>
                     <Route path="/Locations" element={<Location/>}/>
                     <Route path="/editIncinerationProgress/:id" element={<EditIncinerationProgress/>}/>
-                    <Route path='changePassword' element={<PasswordChange/>}/>
-
-
                </Route>
+                <Route path='/changePassword' element={<PasswordChange/>}/>
                 <Route path="/login" element={<Login/>}/>
             </Routes>
             </div>

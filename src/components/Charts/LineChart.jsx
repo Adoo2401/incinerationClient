@@ -79,7 +79,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
     <CircularProgress sx={{color:currentColor}}/>
 </div>:
     <>
-    <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>
+    <div  style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>
     <ChartComponent
       palettes={palette}
       id="line-chart"

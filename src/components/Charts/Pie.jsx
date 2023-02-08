@@ -27,7 +27,7 @@ const Doughnut = ({ id, data, legendVisiblity, height }) => {
 
   return (
     <>
-    <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Pie Chart Data</Button></div>
+    <div  style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Pie Chart Data</Button></div>
     <AccumulationChartComponent
       id={id}
       legendSettings={{ visible: legendVisiblity, background: 'white',showZero:false }}

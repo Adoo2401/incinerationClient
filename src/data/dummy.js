@@ -184,25 +184,12 @@ export const operatorDataGrid=[
   
 ]
 
-
-const locationSummary=(props)=>{
-
-  let upperCase = props.location.replace(/\b[a-z]/g, function(letter) {
-    return letter.toUpperCase();
-  });
-  return(
-    <p>{upperCase}</p>
-  )
-}
-
-
 export const incinerationSummaryGrid = [
   {
     field:"location",
     textAlign:"Center",
     headerText: 'Locations',
     width: '200',
-    template:locationSummary
   },
   {
     field: 'preHeating',

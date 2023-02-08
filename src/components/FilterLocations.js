@@ -53,7 +53,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <FormControl sx={{ m: 1, width: 300 }} style={{marginLeft:"20px"}}>
+    <FormControl sx={{ width: 300 }} style={{marginLeft:"20px"}}>
          <InputLabel>Select Locations</InputLabel>
          <Select value={select} onChange={handleChange} input={<OutlinedInput  label="Locations" />} labelId='demo-multiple-name-label' id="demo-multiple-name" multiple MenuProps={MenuProps}>
                    {!loader?

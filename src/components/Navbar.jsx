@@ -5,7 +5,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../contexts/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { BiLogIn } from 'react-icons/bi';
+import { BiLogIn, BiLogOut } from 'react-icons/bi';
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent content={title} position="BottomCenter">
@@ -25,7 +25,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 );
 
 const Navbar = () => {
-  const { currentColor, activeMenu, setActiveMenu, setScreenSize, screenSize } = useStateContext();
+  const { currentColor, activeMenu, setActiveMenu, setScreenSize, screenSize,logout } = useStateContext();
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -55,6 +55,7 @@ const Navbar = () => {
 
       <NavButton title="Menu" customFunc={handleActiveMenu} color={currentColor} icon={<AiOutlineMenu />} />
       {!token && <Button endIcon={<BiLogIn/>} color="inherit" variant="contained" onClick={navigateToLogin}>Login</Button>}
+      {token && <Button endIcon={<BiLogOut/>} color="inherit" variant="contained" onClick={()=>logout()}>Log Out</Button>}
       <div className="flex">
       </div>
     </div>

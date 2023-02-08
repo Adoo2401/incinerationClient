@@ -123,6 +123,25 @@ input[type="datetime-local"]:in-range::-webkit-datetime-edit-year-field, input[t
   /* background-color: #D09CFA; */
 }
 
+.e-grid.custom { 
+  border: none; 
+} 
+
+#grid{
+  border: none;
+}
+
+#grid_toolbarItems{
+  border: none;
+}
+
 .e-grid .e-row:hover .e-rowcell {
   background-color: #F3CCFF !important;
+}
+
+.chart_buttons{
+  position:fixed;
+  top: 350px;
+  /* left: 20%; */
+  z-index: 100;
 }

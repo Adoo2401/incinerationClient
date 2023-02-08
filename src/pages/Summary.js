@@ -73,7 +73,7 @@ const Summary = () => {
         <CircularProgress sx={{color:currentColor}}/>
     </div>:
     <div style={{minHeight:"700px",display:'flex',alignItems:"center",justifyContent:"space-between",width:'100%',flexWrap:"wrap"}}>
-      <GridComponent height={"300px"} filterSettings={{ignoreAccent:true,type:"Excel"}}  width={"50%"} style={{marginTop:"20px",flex:0.5}} ref={g => grid = g} id='grid' allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} allowExcelExport={true} toolbarClick={toolbarClick} toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering >
+      <GridComponent height={"300px"} filterSettings={{ignoreAccent:true,type:"Excel"}}  width={"50%"} style={{marginTop:"20px"}} ref={g => grid = g} id='grid' allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} allowExcelExport={true} toolbarClick={toolbarClick} toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering >
         <ColumnsDirective>
 
            {incinerationSummaryGrid.map((item,index)=>
