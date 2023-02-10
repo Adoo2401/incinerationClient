@@ -8,7 +8,7 @@ const Protect = () => {
 
   return (
     <>
-    {auth.role=="admin"?<Outlet/>:<Navigate to={"/login"}/>}
+    {auth?.role=="admin"?<Outlet/>:<Navigate to={"/login"}/>}
     </>
   )
 }

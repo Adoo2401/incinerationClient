@@ -78,6 +78,7 @@ useEffect(()=>{
                 <Route element={<ManagerRoutes/>}>
                    <Route path="/" element={(<Dashboard />)} />
                    <Route path="/dashboard" element={(<Dashboard />)} />
+                   <Route path='/changePassword' element={<PasswordChange/>}/>
                 </Route>
 
 
@@ -93,7 +94,6 @@ useEffect(()=>{
                     <Route path="/Locations" element={<Location/>}/>
                     <Route path="/editIncinerationProgress/:id" element={<EditIncinerationProgress/>}/>
                </Route>
-                <Route path='/changePassword' element={<PasswordChange/>}/>
                 <Route path="/login" element={<Login/>}/>
             </Routes>
             </div>

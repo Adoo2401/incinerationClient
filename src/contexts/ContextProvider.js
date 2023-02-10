@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 const StateContext = createContext();
 
@@ -31,6 +32,7 @@ export const ContextProvider = ({ children }) => {
   const logout=()=>{
     setAuth(null);
     sessionStorage.clear();
+    <Navigate to="/login"/>
   }
 
   const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
