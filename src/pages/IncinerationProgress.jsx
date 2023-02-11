@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport} from '@syncfusion/ej2-react-grids'
+import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport, ExcelExport} from '@syncfusion/ej2-react-grids'
 import { Header } from '../components';
 import { deletee, getIncinerationProgress } from '../controllers/apiController';
 import { Button, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { RiDeleteBack2Line, RiEditCircleFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
+import { useStateContext } from '../contexts/ContextProvider';
 
 const IncinerationProgress = () => {
 
@@ -15,19 +16,34 @@ const IncinerationProgress = () => {
   let token=sessionStorage.getItem("token")
   const [grid,setGrid]=useState([]);
   const [loader,setLoader]=useState(true);
+  const {currentColor} =useStateContext()
 
   async function getData(){
     let resp=await getIncinerationProgress(token);
     if(resp){
       setData(()=>{
         return resp.message.map((elm)=>{
-          return {...elm,date:new Date(elm.date)};
+          let backlog=elm.wasteCollected-elm.weightIncinerated
+          backlog=backlog.toFixed(2);
+          backlog=Number(backlog)
+          return {...elm,date:new Date(elm.date.substring(0,16)),backlog};
         })
       })
       setLoader(false)
     }
 
   }
+
+  useEffect(()=>{
+   
+    if(loader) { return }
+ 
+    let grid =document.querySelector('.e-grid');
+
+  
+    grid.classList.add(`${currentColor==="#1A97F5"?"blue-theme":currentColor==="#03C9D7"?"green-theme":currentColor==="#7352FF"?"purple-theme":currentColor==="#FF5C8E"?"red-theme":currentColor==="#1E4DB7"?"indigo-theme":"orange-theme"}`)
+
+  },[loader])
 
   useEffect(()=>{
     const start=(props)=>{
@@ -154,15 +170,7 @@ const IncinerationProgress = () => {
         )
     }
     
-    const backlog=(props)=>{
-
-      let backlog=props.wasteCollected-props.weightIncinerated
-      backlog=backlog.toFixed(2);
-      backlog=Number(backlog)
-      return(
-        <p>{backlog}</p>
-      )
-    }
+    
 
     const dateFormat=(props)=>{
       let formatedDate=props.date.toString();
@@ -260,7 +268,6 @@ const IncinerationProgress = () => {
       },
       {
         field:"backlog",
-        template:backlog,
         textAlign:"Center",
         headerText:"Backlog",
         width:"150"
@@ -299,14 +306,29 @@ const IncinerationProgress = () => {
     
   },[])
 
+  let grids;
+
+  const toolbarClick = (args) => {
+
+    console.log(grids,args)
+    if (grids && args.item.id === 'grids_excelexport') {
+        grids.excelExport();
+    }
+
+    if (grids && args.item.id === 'grids_pdfexport') {
+      grids.pdfExport();
+  }
+
+  }
+
   
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Incineration Progress" />
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
-        <CircularProgress/>
-      </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
+        <CircularProgress sx={{color:currentColor}}/>
+      </div>:<GridComponent className='dffdd' toolbarClick={toolbarClick} ref={g => grids = g} id='grids' filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowExcelExport={true} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search','ExcelExport',"PdfExport"]} width='auto' allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 
            {grid.map((item,index)=>
@@ -315,7 +337,7 @@ const IncinerationProgress = () => {
            )}
 
         </ColumnsDirective>
-        <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort]} />
+        <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort,PdfExport,ExcelExport]} />
       </GridComponent>}
     </div>
   );

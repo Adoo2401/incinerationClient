@@ -89,7 +89,7 @@ const IncinerationProgressInputs = () => {
   
     
     <form onSubmit={handleSubmit}>
-    <Button component="label" variant="contained" endIcon={<AiFillFileExcel/>}> Upload Excel File {file?.name}<input onChange={fileChange} hidden type="file" /></Button>
+    <Button component="label" variant="contained" sx={{backgroundColor:currentColor}} endIcon={<AiFillFileExcel/>}> Upload Excel File {file?.name}<input onChange={fileChange} hidden type="file" /></Button>
     {file.length===0?
     <>
     <div style={{width:'100%',display:"grid", gridTemplateColumns:"1fr"}} > 

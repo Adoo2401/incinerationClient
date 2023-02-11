@@ -5,12 +5,25 @@ import { getLocation,addLocation,updateArchive} from '../controllers/apiControll
 import { Button, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { BiArchiveIn, BiArchiveOut } from 'react-icons/bi';
+import { useStateContext } from '../contexts/ContextProvider';
 
 const Location = () => {
 
   const [data,setData]=useState([])
+  const {currentColor} = useStateContext()
   let token=sessionStorage.getItem("token")
   const [loader,setLoader]=useState(true);
+
+  useEffect(()=>{
+   
+    if(loader) { return }
+ 
+    let grid =document.querySelector('.e-grid');
+
+  
+    grid.classList.add(`${currentColor==="#1A97F5"?"blue-theme":currentColor==="#03C9D7"?"green-theme":currentColor==="#7352FF"?"purple-theme":currentColor==="#FF5C8E"?"red-theme":currentColor==="#1E4DB7"?"indigo-theme":"orange-theme"}`)
+
+  },[loader])
 
   async function fetchLocations(prompt,value){
     let resp=await getLocation(token);
@@ -98,9 +111,9 @@ const Location = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Locations" />
-      <Button style={{marginBottom:"10px"}} color="inherit" variant='contained' onClick={postLocation}>Add Location</Button>
+      <Button style={{marginBottom:"10px"}} sx={{backgroundColor:currentColor}} variant='contained' onClick={postLocation}>Add Location</Button>
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
-        <CircularProgress/>
+        <CircularProgress sx={{color:currentColor}}/>
       </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:15}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 

@@ -34,7 +34,7 @@ const Login = () => {
           sessionStorage.setItem('user',JSON.stringify(resp.message))
           sessionStorage.setItem("token",resp.token)
           setAuth(resp.message);
-          navigate("/");
+          navigate("/dashboard");
           return toast.success("Successfully Login")
         }
 

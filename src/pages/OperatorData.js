@@ -4,11 +4,13 @@ import {contextMenuItems, operatorDataGrid} from '../data/dummy';
 import { Header } from '../components';
 import { getOperator} from '../controllers/apiController';
 import { CircularProgress } from '@mui/material';
+import { useStateContext } from '../contexts/ContextProvider';
 
 const OperatorData = () => {
 
   const [data,setData]=useState([])
   let token=sessionStorage.getItem("token")
+  const {currentColor} = useStateContext();
   const [loader,setLoader]=useState(true);
 
   useEffect(async()=>{
@@ -22,12 +24,23 @@ const OperatorData = () => {
 
   },[])
 
+  useEffect(()=>{
+   
+    if(loader) { return }
+ 
+    let grid =document.querySelector('.e-grid');
+
+  
+    grid.classList.add(`${currentColor==="#1A97F5"?"blue-theme":currentColor==="#03C9D7"?"green-theme":currentColor==="#7352FF"?"purple-theme":currentColor==="#FF5C8E"?"red-theme":currentColor==="#1E4DB7"?"indigo-theme":"orange-theme"}`)
+
+  },[loader])
+
   
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Operators Data" />
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
-        <CircularProgress/>
+        <CircularProgress sx={{color:currentColor}}/>
       </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 

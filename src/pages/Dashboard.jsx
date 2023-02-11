@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 import { Header } from "../components";
+import DashboardLine from "../components/Charts/DashboardLine";
 import DashboardList from "../components/DashboardList";
 import { useStateContext } from "../contexts/ContextProvider";
 import { dashboard } from "../controllers/apiController";
@@ -28,6 +29,7 @@ const Dashboard = () => {
   },[])
 
   return (
+   <>
     <div className="m-4 md:m-10 mt-24 p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
       <Header category="Page" title="Dashboard" />
       <div className="w-full">
@@ -41,14 +43,16 @@ const Dashboard = () => {
                 justifyContent: "center",
               }}
             >
-              <CircularProgress />
+              <CircularProgress sx={{color:currentColor}} />
             </div>
           ) : (
             data.map((elm, ind) => <DashboardList key={ind} ind={ind} data={elm} />)
           )}
         </div>
       </div>
+       <DashboardLine/>
     </div>
+   </>
   );
 };
 

@@ -23,6 +23,7 @@ const Summary = () => {
   const [date,setDate]=useState("")
   const [to,setTo]=useState("");
   const { currentColor} = useStateContext();
+  const [show,setShow]=useState(false);
   const [loader,setLoader]=useState(false)
 
 
@@ -31,6 +32,7 @@ const Summary = () => {
   useEffect(async()=>{
   
     if(date!=="" && to!==""){
+        setShow(true);
         setLoader(true)
         let resp=await getSummary(token,date,to,select);
     if(resp){
@@ -60,6 +62,17 @@ const Summary = () => {
 
   }
 
+  useEffect(()=>{
+   
+    if(loader || show===false) { return }
+ 
+    let grid =document.querySelector('.e-grid');
+
+  
+    grid.classList.add(`${currentColor==="#1A97F5"?"blue-theme":currentColor==="#03C9D7"?"green-theme":currentColor==="#7352FF"?"purple-theme":currentColor==="#FF5C8E"?"red-theme":currentColor==="#1E4DB7"?"indigo-theme":"orange-theme"}`)
+
+  },[loader,show])
+
   
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
@@ -72,6 +85,10 @@ const Summary = () => {
        {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
     </div>:
+
+    show!=false?
+
+    
     <div style={{minHeight:"700px",display:'flex',alignItems:"center",justifyContent:"space-between",width:'100%',flexWrap:"wrap"}}>
       <GridComponent height={"300px"} filterSettings={{ignoreAccent:true,type:"Excel"}}  width={"50%"} style={{marginTop:"20px"}} ref={g => grid = g} id='grid' allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:10}} allowExcelExport={true} toolbarClick={toolbarClick} toolbar={['Search','ExcelExport',"PdfExport"]}  allowSorting allowFiltering >
         <ColumnsDirective>
@@ -86,9 +103,9 @@ const Summary = () => {
       </GridComponent>
       <Pie select={select} to={to} dateProp={date}/>
     </div>
-      }
+      :null}
 
-    {loader?null:<Line select={select} line={line} setLine={setLine} dateProp={date} to={to}/>}
+    {loader?null:show!==false?<Line select={select} line={line} setLine={setLine} dateProp={date} to={to}/>:null}
   
     </div>
   );

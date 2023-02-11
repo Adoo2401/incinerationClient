@@ -105,38 +105,29 @@ input[type="datetime-local"]:in-range::-webkit-datetime-edit-year-field, input[t
   font-weight: bold;
 }
 
-
-.e-grid .e-headercell {
-  color: #F8EDE3;
-  font-weight: bolder;
-  background-color:#A555EC;
+.blue-theme .e-headercell{
+  color: white;
+  background-color: #1A97F5;
 }
-
-.e-grid .e-headercelldiv {
-  /* font-weight: 700; */
+.green-theme .e-headercell{
+  color: white;
+  background-color: #03C9D7;
 }
-.e-grid .e-rowcell.e-selectionbackground {
-  background-color: #F3CCFF;
+.purple-theme .e-headercell{
+  color: white;
+  background-color: #7352FF;
 }
-
-.e-grid .e-row {
-  /* background-color: #D09CFA; */
+.red-theme .e-headercell{
+  color: white;
+  background-color: #FF5C8E;
 }
-
-.e-grid.custom { 
-  border: none; 
-} 
-
-#grid{
-  border: none;
+.indigo-theme .e-headercell{
+  color: white;
+  background-color: #1E4DB7;
 }
-
-#grid_toolbarItems{
-  border: none;
-}
-
-.e-grid .e-row:hover .e-rowcell {
-  background-color: #F3CCFF !important;
+.orange-theme .e-headercell{
+  color: white;
+  background-color: #FB9678;
 }
 
 .chart_buttons{

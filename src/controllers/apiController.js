@@ -355,3 +355,19 @@ export const changePassword=async(token,data)=>{
     return false
   }
 }
+export const getDashboardLineData=async()=>{
+  try {
+    
+    let resp=await fetch(`${baseURL}/currenMonthLine`);
+    resp=await resp.json();
+    
+    if(resp){
+      return resp
+    }
+
+    return false;
+
+  } catch (error) {
+    return false
+  }
+}

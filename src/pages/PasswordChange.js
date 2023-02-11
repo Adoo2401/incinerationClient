@@ -9,7 +9,7 @@ import { changePassword } from '../controllers/apiController';
 const PasswordChange = () => {
 
     const [data,setData]=useState({oldPassword:"",newPassword:"",confirmPassword:""});
-    const {logout}=useStateContext();
+    const {logout,currentColor}=useStateContext();
     const [disabled,setDisabled]=useState(false);
     const navigate=useNavigate();
     const handleInputChange=(e)=>{setData({...data,[e.target.name]:e.target.value})}
@@ -38,7 +38,7 @@ const PasswordChange = () => {
        <TextField sx={{width:"100%",marginTop:"50px"}} type="password" value={data.newPassword}  onChange={handleInputChange} variant='filled' name='newPassword' label="New Password"/>
        <TextField sx={{width:"100%",marginTop:"50px"}} type="password" value={data.confirmPassword} onChange={handleInputChange}  variant='filled' name="confirmPassword" label="Confirm New Password"/>
 
-       <Button disabled={disabled?true:false} variant='contained' color="success" onClick={handleChange} sx={{marginTop:"20px"}}>Change</Button>
+       <Button disabled={disabled?true:false} variant='contained'  onClick={handleChange} sx={{marginTop:"20px",backgroundColor:currentColor}}>Change</Button>
 
     </div>
   )

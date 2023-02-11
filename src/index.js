@@ -12,8 +12,8 @@ ReactDOM.render(
   <React.StrictMode>
     <ContextProvider>
       <App />
-      <ToastContainer/>
     </ContextProvider>
+      <ToastContainer/>
   </React.StrictMode>,
   document.getElementById('root'),
 );
