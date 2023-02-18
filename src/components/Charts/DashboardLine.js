@@ -8,7 +8,10 @@ import { getDashboardLineData } from '../../controllers/apiController';
 import { toast } from 'react-toastify';
 
 const DashboardLine = () => {
-  const { currentMode,currentColor } = useStateContext();
+  let { currentMode,currentColor} = useStateContext();
+
+let auth = JSON.parse(sessionStorage.getItem("user"))
+
   let [data,setData]=useState([])
   let [loader,setLoader]=useState(true)
 
@@ -76,7 +79,7 @@ const DashboardLine = () => {
     <CircularProgress sx={{color:currentColor}}/>
 </div>:
     <>
-    <div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>
+    {auth.role=="admin"?<div style={{display:"flex",justifyContent:"center"}}><Button onClick={exportDataToExcle} style={{marginBottom:"10px"}} variant="contained" color="inherit">Export Line Chart Data </Button></div>:null}
     <ChartComponent
       palettes={palette}
       id="line-chart"

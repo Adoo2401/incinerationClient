@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search} from '@syncfusion/ej2-react-grids'
 import { Header } from '../components';
-import { getLocation,addLocation,updateArchive} from '../controllers/apiController';
+import { getLocation,addLocation,updateArchive, updateLocation, deleteLocation} from '../controllers/apiController';
 import { Button, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
-import { BiArchiveIn, BiArchiveOut } from 'react-icons/bi';
+import { BiArchiveIn, BiArchiveOut, BiEdit } from 'react-icons/bi';
 import { useStateContext } from '../contexts/ContextProvider';
+import { MdDelete } from 'react-icons/md';
 
 const Location = () => {
 
@@ -26,6 +27,7 @@ const Location = () => {
   },[loader])
 
   async function fetchLocations(prompt,value){
+    setLoader(true);
     let resp=await getLocation(token);
     
     if(resp){
@@ -66,6 +68,49 @@ const Location = () => {
     )
   }
 
+  const EditCol = (props)=>{
+
+    const Edit = async () =>{
+
+      let prompt=window.prompt("Edit Location Name",props.location);
+      if(prompt===null || prompt=="") { return };
+
+      let API = await updateLocation(token,props._id,prompt);
+
+      if(API.success){
+         toast.success("Updated")
+         fetchLocations(false);
+      }else{
+        toast.error("Something Went Wrong");
+      }
+    }
+
+    return(
+      <Button onClick={Edit} variant='contained' color="info" endIcon={<BiEdit/>}>EDIT</Button>
+    )
+  }
+
+  const DELETE = (props)=>{
+
+    const del = async ()=>{
+      if(window.confirm("Are you sure you want to delete this location?")){
+          let API = await deleteLocation(token,props._id);
+
+          if(API.success){
+            toast.success("Deleted");
+            fetchLocations(false);
+          }else{
+            toast.error("Something Went Wrong")
+          }
+
+      }
+    }
+
+    return(
+      <Button onClick={del} variant="contained" color="error" endIcon={<MdDelete/>}>Delete</Button>
+    )
+  }
+
   const locationGrid=[
     {
         field:"location",
@@ -80,7 +125,21 @@ const Location = () => {
         textAlign:"Center",
         headerText: 'Archive',
         width: '50',
-      },
+    },
+    {
+      field:"Edit",
+      template:EditCol,
+      textAlign:"Center",
+      headerText: 'Edit',
+      width: '50',
+    }
+    ,{
+      field:"Delete",
+      template:DELETE,
+      textAlign:"center",
+      headerText: 'Delete',
+      width:'50'
+    }
   ]
 
 

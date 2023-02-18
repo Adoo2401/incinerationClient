@@ -146,60 +146,6 @@ export const getStackedLineData=async(token,date)=>{
  }
 }
 
-export const addOperatorData=async(token,data)=>{
-  try {
-    let resp=await fetch(`${baseURL}/addOperator`,{
-      method:"POST",
-      headers:{'Content-Type':'application/json','authorization':token},
-      body:JSON.stringify(data)
-    })
-    resp=await resp.json()
-    if(resp.success){
-      return resp
-    }
-    return false
-
-  } catch (error) {
-    return false
-  }
-}
-
-export const getOperator=async(token)=>{
-
-  try {
-    
-    let resp=await fetch(`${baseURL}/getOperator`,{headers:{"authorization":token}});
-    resp=await resp.json();
-
-    if(resp.success){
-      return resp
-    }
-
-    return false
-
-  } catch (error) {
-    return false
-  }
-}
-
-
-export const getOperatorSumary=async(token,date,to,locations)=>{
-
-  try {
-    
-    let resp=await fetch(`${baseURL}/getOperatorSummary?from=${date}&to=${to}`,{headers:{"authorization":token,"Content-Type":'application/json'},method:"POST",body:JSON.stringify({locations})});
-    resp=await resp.json();
-    if(resp.success){
-      return resp
-    }
-
-    return false
-
-  } catch (error) {
-    return false
-  }
-
-}
 export const getSingle=async(token,id)=>{
 
   try {
@@ -355,6 +301,7 @@ export const changePassword=async(token,data)=>{
     return false
   }
 }
+
 export const getDashboardLineData=async()=>{
   try {
     
@@ -366,6 +313,37 @@ export const getDashboardLineData=async()=>{
     }
 
     return false;
+
+  } catch (error) {
+    return false
+  }
+}
+
+export const updateLocation = async (token,id,location)=>{
+  try {
+    
+    let resp=await fetch(`${baseURL}/updateLocation/${id}`,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify({location})});
+    resp=await resp.json();
+    
+    if(resp){
+      return resp
+    }
+  } catch (error) {
+    return false
+  }
+}
+
+export const deleteLocation=async(token,id)=>{
+  try {
+    
+    let resp = await fetch(`${baseURL}/deleteLocation/${id}`,{method:"DELETE",headers:{"Content-Type":"application/json","Authorization":token}});
+    resp = await resp.json()
+
+    if(resp){
+      return resp
+    }
+
+    return false
 
   } catch (error) {
     return false

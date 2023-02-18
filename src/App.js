@@ -10,8 +10,6 @@ import { useStateContext } from "./contexts/ContextProvider";
 import AddIncinerationProgress from "./pages/AddIncinerationProgress";
 import AdminRoutes from "./secure/AdminRoutes";
 import Login from "./pages/Login";
-import AddOperator from "./pages/AddOperator";
-import OperatorDatas from "./pages/OperatorData";
 import EditIncinerationProgress from "./pages/EditIncinerationProgress";
 import PasswordChange from "./pages/PasswordChange";
 import { AiFillSetting } from "react-icons/ai";
@@ -111,8 +109,6 @@ const App = () => {
                     path="/IncinerationProgress"
                     element={<IncinerationProgress />}
                   />{" "}
-                  <Route path="/AddOperatorData" element={<AddOperator />} />{" "}
-                  <Route path="/OperatorsData" element={<OperatorDatas />} />{" "}
                   <Route path="/Summary" element={<Summary />} />{" "}
                   <Route path="/Locations" element={<Location />} />{" "}
                   <Route

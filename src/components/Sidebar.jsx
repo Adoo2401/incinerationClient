@@ -52,14 +52,6 @@ const Sidebar = () => {
               icon: <FaMapMarkerAlt />,
             },
             {
-              name: "Add Operator Data",
-              icon: <GrUserWorker />,
-            },
-            {
-              name: "Operators Data",
-              icon: <GoDatabase />,
-            },
-            {
               name: "Summary",
               icon: <BsStack />,
             },

@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, TextField } from '@mui/material'
+import { CircularProgress, TextField } from '@mui/material'
 import {GridComponent,ColumnsDirective,ColumnDirective,Page,Selection,Inject,Edit,Toolbar,Sort,Filter,Search,PdfExport,ExcelExport} from '@syncfusion/ej2-react-grids'
-import {contextMenuItems,incinerationSummaryGrid} from '../data/dummy';
+import {incinerationSummaryGrid} from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
-import Stacked from './Charts/Stacked'
 import { Header } from '../components';
 import { getSummary} from '../controllers/apiController';
 import { toast } from 'react-toastify';
 import Pie from './Charts/Pie';
-import ColorMapping from './Charts/ColorMapping';
 import Line from './Charts/Line';
-import OperatorSummary from './operatorSummary';
 import FilterLocations from '../components/FilterLocations';
 
 const Summary = () => {

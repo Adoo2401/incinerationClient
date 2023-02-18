@@ -25,7 +25,8 @@ const IncinerationProgress = () => {
         return resp.message.map((elm)=>{
           let backlog=elm.wasteCollected-elm.weightIncinerated
           backlog=backlog.toFixed(2);
-          backlog=Number(backlog)
+          backlog=Number(backlog)                         
+      
           return {...elm,date:new Date(elm.date.substring(0,16)),backlog};
         })
       })
@@ -115,6 +116,8 @@ const IncinerationProgress = () => {
         )
     
     }
+
+    
     
     const activity=(props)=>{
       const arr = props.activity.split(" ");
