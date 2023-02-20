@@ -31,7 +31,7 @@
          
             if (minDiff >= 60) {
                 if(hourDiff.toString().split('-')[0]!=""){
-                    console.log('yes');
+                  
                     hourDiff2++
                     check=true
                 }                

@@ -54,6 +54,7 @@ const Navbar = () => {
   const [loader,setLoader]=useState(false);
   const navigateToLogin=()=>navigate("/login");
   let token=sessionStorage.getItem("token");
+  let user = JSON.parse(sessionStorage.getItem("user"));
 
   const handleBackup = async()=>{
    
@@ -94,7 +95,7 @@ const Navbar = () => {
 
           {!token && <NavButton title="Login" icon={<BiLogIn/>} color={currentColor}  customFunc={navigateToLogin}/>}
           {token && <NavButton icon={<BiLogOut/>} title="LogOut"  color={currentColor}  customFunc={logout}/>}
-          {auth && <NavButton title={loader?"Exporting...":"Backup Data"} icon={<RiDatabaseLine/>} color={currentColor} customFunc={handleBackup}/>}
+          {auth && user.role==="admin"? <NavButton title={loader?"Exporting...":"Backup Data"} icon={<RiDatabaseLine/>} color={currentColor} customFunc={handleBackup}/>:null}
 
       </div>
     </div>

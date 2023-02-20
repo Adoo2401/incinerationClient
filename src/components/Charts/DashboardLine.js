@@ -28,7 +28,7 @@ let auth = JSON.parse(sessionStorage.getItem("user"))
   },[])
 
   const zoomsettings = {
-    enableMouseWheelZooming: true,
+    enableMouseWheelZooming: false,
     enablePinchZooming: true,
     enableSelectionZooming: false,
     mode: 'X',
