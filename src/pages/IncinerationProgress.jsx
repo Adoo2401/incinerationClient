@@ -312,22 +312,20 @@ const IncinerationProgress = () => {
   let grids;
 
   
-    function pdfConfigfunction(args){ 
-   
-      console.log(args.cell.width)
-      args.cell.width = 100;        // Set the column width as 50 
-       
-  } 
+    
 
   const toolbarClick = (args) => {
-    
     
     if (grids && args.item.id === 'grids_excelexport') {
         grids.excelExport();
     }
 
     if (grids && args.item.id === 'grids_pdfexport') {
-      grids.pdfExport();
+      const exportProperties = {
+        pageOrientation: 'Landscape',
+        pageSize: 'A1'
+      };
+      grids.pdfExport(exportProperties);
   }
 
   }
@@ -339,7 +337,7 @@ const IncinerationProgress = () => {
       <Header category="Page" title="Incineration Progress" />
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
-      </div>:<GridComponent pdfHeaderQueryCellInfo={pdfConfigfunction} className='dffdd' toolbarClick={toolbarClick} ref={g => grids = g} id='grids' filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowExcelExport={true} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search','ExcelExport',"PdfExport"]} width='auto' allowSorting allowFiltering  allowPaging>
+      </div>:<GridComponent className='dffdd' toolbarClick={toolbarClick} ref={g => grids = g} id='grids' filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowExcelExport={true} allowPdfExport={true} pageSettings={{pageSize:10}} toolbar={['Search','ExcelExport',"PdfExport"]} width='auto' allowSorting allowFiltering  allowPaging>
         <ColumnsDirective>
 
            {grid.map((item,index)=>
