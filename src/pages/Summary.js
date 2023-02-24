@@ -54,7 +54,11 @@ const Summary = () => {
     }
 
     if (grid && args.item.id === 'grid_pdfexport') {
-      grid.pdfExport();
+      const exportProperties = {
+        pageOrientation: 'Landscape',
+        pageSize: 'A3'
+      };
+      grid.pdfExport(exportProperties);
   }
 
   }
