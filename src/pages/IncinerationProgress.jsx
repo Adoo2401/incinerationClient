@@ -86,95 +86,7 @@ const IncinerationProgress = () => {
     
     }
     
-    const location=(props)=>{
-    
-      const arr = props.location.split(" ");
-    
-    for (var i = 0; i < arr.length; i++) {
-        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-    
-    }
-    
-    const str2 = arr.join(" ");
-      return(
-        <p>{str2}</p>
-      )
-    }
-    
-    const status=(props)=>{
-    
-      const arr = props.status.split(" ");
-    
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      
-      }
-      
-      const str2 = arr.join(" ");
-        return(
-          <p>{str2}</p>
-        )
-    
-    }
-
-    
-    
-    const activity=(props)=>{
-      const arr = props.activity.split(" ");
-    
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      
-      }
-      
-      const str2 = arr.join(" ");
-        return(
-          <p>{str2}</p>
-        )
-    }
-    
-    const shutdownNature=(props)=>{
-      const arr = props.shutdownNature.split(" ");
-    
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      
-      }
-      
-      const str2 = arr.join(" ");
-        return(
-          <p>{str2}</p>
-        )
-    }
-    const reason=(props)=>{
-      const arr = props.reason.split(" ");
-    
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      
-      }
-      
-      const str2 = arr.join(" ");
-        return(
-          <p>{str2}</p>
-        )
-    }
-    const operator=(props)=>{
-      const arr = props.operator.split(" ");
-    
-      for (var i = 0; i < arr.length; i++) {
-          arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-      
-      }
-      
-      const str2 = arr.join(" ");
-        return(
-          <p>{str2}</p>
-        )
-    }
-    
-    
-
+   
     const dateFormat=(props)=>{
       let formatedDate=props.date.toString();
       formatedDate=formatedDate.substring(0,15);
@@ -196,7 +108,6 @@ const IncinerationProgress = () => {
       },
       {
         field: 'location',
-        template:location,
         textAlign:"Center",
         headerText: 'Location',
         filter:{type:"CheckBox"},
@@ -223,7 +134,6 @@ const IncinerationProgress = () => {
       },
       {
         field: 'status',
-        template:status,
         textAlign:"Center",
         headerText: 'Status',
         width: '150',
@@ -231,7 +141,6 @@ const IncinerationProgress = () => {
     
       {
         field: 'activity',
-        template:activity,
         textAlign:"Center",
         headerText: 'Activity',
         width: '150',
@@ -239,14 +148,12 @@ const IncinerationProgress = () => {
       
       {
         field: 'shutdownNature',
-        template:shutdownNature,
         textAlign:"Center",
         headerText: 'Shutdown Nature',
         width: '150',
       },
       {
         field: 'reason',
-        template:reason,
         textAlign:"Center",
         headerText: 'Reason',
         width: '150',
@@ -278,7 +185,6 @@ const IncinerationProgress = () => {
       },
       {
         field: 'operator',
-        template:operator,
         textAlign:"Center",
         headerText: 'Operator',
         width: '150',
@@ -323,7 +229,7 @@ const IncinerationProgress = () => {
     if (grids && args.item.id === 'grids_pdfexport') {
       const exportProperties = {
         pageOrientation: 'Landscape',
-        pageSize: 'A1'
+        pageSize: 'A1',
       };
       grids.pdfExport(exportProperties);
   }
