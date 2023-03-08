@@ -54,7 +54,7 @@ let auth = JSON.parse(sessionStorage.getItem("user"))
     { dataSource:data[2],
       xName: 'x',
       yName: 'y',
-      name: 'Waste Collected',
+      name: 'Backlog',
       width: '2',
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
@@ -62,7 +62,7 @@ let auth = JSON.parse(sessionStorage.getItem("user"))
   
   ]:[];
 
-  const palette = ["#E94649", "#F6B53F", "#6FAAB0", "#C4C24A"];
+  const palette = ["#6FAAB0", "#F6B53F", "#E94649", "#C4C24A" ];
 
   function exportDataToExcle(){
     
