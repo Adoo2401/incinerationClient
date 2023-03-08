@@ -30,7 +30,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
   const zoomsettings = {
     enableMouseWheelZooming: true,
     enablePinchZooming: true,
-    enableSelectionZooming: false,
+    enableSelectionZooming: true,
     mode: 'X',
     enableScrollbar: true,
 };
@@ -94,7 +94,7 @@ const LineChart = ({dateProp,to,line,setLine,select}) => {
       background={currentMode === 'Dark' ? '#33373E' : '#fff'}
       legendSettings={{ background: 'white' }}
     >
-      <Inject services={[ColumnSeries,Zoom, Tooltip, LineSeries, Category,Legend,Export]} />
+      <Inject services={[ColumnSeries,Tooltip,Zoom, LineSeries, Category,Legend,Export]} />
       <SeriesCollectionDirective>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         {lineCustomSeries.map((item, index) => <SeriesDirective key={index} {...item} />)}

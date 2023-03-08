@@ -31,7 +31,8 @@ export const ColorMappingPrimaryYAxis = {
 
 export const LinePrimaryXAxis = {
   valueType: 'Category',
-  zoomFactor: 0.3
+  zoomFactor: 0.3,
+  zoomPosition:{x:0,y:0}
   // labelFormat: 'y',
   // intervalType: 'Years',
   // edgeLabelPlacement: 'Shift',
