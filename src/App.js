@@ -49,6 +49,8 @@ const App = () => {
 
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
+       {show?<div style={{height:"100vh",width:"100vw"}}>
+      <img src="./Page.jpeg" alt=""  style={{height:"100%"}} width="100%"/></div>:
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
@@ -122,7 +124,7 @@ const App = () => {
             <Footer />
           </div>
         </div>
-      </BrowserRouter>
+      </BrowserRouter>}
     </div>
   );
 };
