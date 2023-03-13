@@ -51,14 +51,6 @@ let auth = JSON.parse(sessionStorage.getItem("user"))
       width: '2',
       marker: { visible: true, width: 10, height: 10 },
       type: 'Line' },
-    { dataSource:data[2],
-      xName: 'x',
-      yName: 'y',
-      name: 'Backlog',
-      width: '2',
-      marker: { visible: true, width: 10, height: 10 },
-      type: 'Line' },
-  
   
   ]:[];
 
