@@ -62,7 +62,7 @@ const Login = () => {
       <input type="password" required value={password} onChange={(e)=>setPassword(e.target.value)}/>
       <label>Password</label>
     </div>
-    <p onClick={()=>setShow(true)} className='text-red-400 cursor-pointer text-sm hover:underline fontSize'>Forgot Password?</p>
+
     <a>
       <span></span>
       <span></span>
@@ -71,7 +71,7 @@ const Login = () => {
       <button type={"Submit"} style={{cursor:"pointer"}}>Login</button>
     </a>
   </form>
-  <Dialog show={show} setShow={setShow} />
+  {/* <Dialog show={show} setShow={setShow} /> */}
 </div>
 }
   </>
