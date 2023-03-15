@@ -5,11 +5,13 @@ import { useStateContext } from '../contexts/ContextProvider';
 import { CircularProgress } from '@mui/material';
 import {toast} from 'react-toastify'
 import { login } from '../controllers/apiController';
+import Dialog from '../components/ForgotPasswordDialog'
 
 const Login = () => {
 
     const {setAuth}=useStateContext();
     const navigate=useNavigate();
+    const [show, setShow] = useState(false)
 
     useEffect(()=>{
 
@@ -60,6 +62,7 @@ const Login = () => {
       <input type="password" required value={password} onChange={(e)=>setPassword(e.target.value)}/>
       <label>Password</label>
     </div>
+    <p onClick={()=>setShow(true)} className='text-red-400 cursor-pointer text-sm hover:underline fontSize'>Forgot Password?</p>
     <a>
       <span></span>
       <span></span>
@@ -68,6 +71,7 @@ const Login = () => {
       <button type={"Submit"} style={{cursor:"pointer"}}>Login</button>
     </a>
   </form>
+  <Dialog show={show} setShow={setShow} />
 </div>
 }
   </>

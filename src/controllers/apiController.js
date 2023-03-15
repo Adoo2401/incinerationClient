@@ -285,10 +285,10 @@ export const locationWiseData=async(token)=>{
   }
 }
 
-export const changePassword=async(token,data)=>{
+export const changePassword=async(token,data,userType)=>{
   try {
     
-    let resp=await fetch(`${baseURL}/updatePassword`,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify(data)});
+    let resp=await fetch(`${baseURL}/updatePassword?userType=${userType}`,{method:"PUT",headers:{"Content-Type":"application/json","Authorization":token},body:JSON.stringify(data)});
     resp=await resp.json();
     
     if(resp){

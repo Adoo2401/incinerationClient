@@ -64,10 +64,10 @@ const Sidebar = () => {
       : {
           title: "",
           links: [
-            {
-              name: "Change Password",
-              icon: <RiLockPasswordFill />,
-            },
+            // {
+            //   name: "Change Password",
+            //   icon: <RiLockPasswordFill />,
+            // },
           ],
         },
   ];

@@ -14,6 +14,8 @@ import EditIncinerationProgress from "./pages/EditIncinerationProgress";
 import PasswordChange from "./pages/PasswordChange";
 import { AiFillSetting } from "react-icons/ai";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import ResetPassword from "./pages/ResetPassword";
+import Page from './assets/Page.jpeg'
 
 const App = () => {
   const {
@@ -50,7 +52,7 @@ const App = () => {
   return (
     <div className={currentMode === "Dark" ? "dark" : ""}>
        {show?<div style={{height:"100vh",width:"100vw"}}>
-      <img src="./Page.jpeg" alt=""  style={{height:"100%"}} width="100%"/></div>:
+      <img src={Page} alt=""  style={{height:"100%"}} width="100%"/></div>:
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
@@ -98,7 +100,6 @@ const App = () => {
                   {" "}
                   <Route path="/" element={<Dashboard />} />{" "}
                   <Route path="/dashboard" element={<Dashboard />} />{" "}
-                  <Route path="/changePassword" element={<PasswordChange />} />{" "}
                 </Route>{" "}
                 <Route element={<AdminRoutes />}>
                   {" "}
@@ -117,8 +118,10 @@ const App = () => {
                     path="/editIncinerationProgress/:id"
                     element={<EditIncinerationProgress />}
                   />{" "}
+                  <Route path="/changePassword" element={<PasswordChange />} />{" "}
                 </Route>{" "}
                 <Route path="/login" element={<Login />} />{" "}
+                <Route path="/resetPassword/:uuid" element={<ResetPassword/>} />{" "}
               </Routes>
             </div>
             <Footer />
