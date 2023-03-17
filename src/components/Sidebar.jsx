@@ -12,6 +12,7 @@ import { IoMdAdd } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
 import { BsStack } from "react-icons/bs";
+import {AiFillPieChart} from 'react-icons/ai'
 
 const Sidebar = () => {
   const { currentColor, activeMenu, setActiveMenu, screenSize } =
@@ -59,16 +60,18 @@ const Sidebar = () => {
               name: "Change Password",
               icon: <RiLockPasswordFill />,
             },
+            {
+              name:"Add Activity",
+              icon:<IoMdAdd/>
+            },{
+              name:"Activity Chart",
+              icon:<AiFillPieChart/>
+            }
           ],
         }
       : {
           title: "",
-          links: [
-            // {
-            //   name: "Change Password",
-            //   icon: <RiLockPasswordFill />,
-            // },
-          ],
+          links: [],
         },
   ];
 

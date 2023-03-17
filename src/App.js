@@ -16,6 +16,8 @@ import { AiFillSetting } from "react-icons/ai";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import ResetPassword from "./pages/ResetPassword";
 import Page from './assets/Page.jpeg'
+import AddActivity from "./pages/AddActivity";
+import ActivityChart from "./pages/ActivityChart";
 
 const App = () => {
   const {
@@ -119,6 +121,8 @@ const App = () => {
                     element={<EditIncinerationProgress />}
                   />{" "}
                   <Route path="/changePassword" element={<PasswordChange />} />{" "}
+                  <Route path="/addActivity" element={<AddActivity/>}/>
+                  <Route path="/activityChart" element={<ActivityChart/>}/>
                 </Route>{" "}
                 <Route path="/login" element={<Login />} />{" "}
                 <Route path="/resetPassword/:uuid" element={<ResetPassword/>} />{" "}
