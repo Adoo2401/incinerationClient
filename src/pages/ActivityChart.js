@@ -14,10 +14,10 @@ import Select from '@mui/material/Select';
 const ActivityChart = () => {
   const [loader, setLoader] = useState(false);
   const [date, setDate] = useState("");
-  const [location,setLocation] = useState("");
+  const [location,setLocation] = useState(undefined);
   const [view,setView] = useState("");
   const [data,setData] = useState([]);
-  const [status,setStatus] = useState("");
+  const [status,setStatus] = useState(undefined);
   const [menuItem,setMenuItem] = useState([]);
   const [menuLoader,setMenuLoader] = useState(true);
   const { currentColor } = useStateContext();
@@ -131,7 +131,7 @@ const ActivityChart = () => {
         </Select>
       </div>
       </div>
-      <Button onClick={()=>{setLocation("");setStatus("");setView("")}} sx={{marginLeft:"15px"}}>Clear Filters</Button>
+      <Button onClick={()=>{setLocation(undefined);setStatus(undefined);setView("")}} sx={{marginLeft:"15px"}}>Clear Filters</Button>
       <Button
               onClick={exportDataToExcle}
               style={{ marginLeft: "20px" }}
