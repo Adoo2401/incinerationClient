@@ -18,6 +18,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Page from './assets/Page.jpeg'
 import AddActivity from "./pages/AddActivity";
 import ActivityChart from "./pages/ActivityChart";
+import ActivityTable from "./pages/ActivityTable";
 
 const App = () => {
   const {
@@ -123,6 +124,7 @@ const App = () => {
                   <Route path="/changePassword" element={<PasswordChange />} />{" "}
                   <Route path="/addActivity" element={<AddActivity/>}/>
                   <Route path="/activityChart" element={<ActivityChart/>}/>
+                  <Route path="/activityTable" element={<ActivityTable/>}/>
                 </Route>{" "}
                 <Route path="/login" element={<Login />} />{" "}
                 <Route path="/resetPassword/:uuid" element={<ResetPassword/>} />{" "}

@@ -1,17 +1,15 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
 import { HiFire } from "react-icons/hi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-
 import { useStateContext } from "../contexts/ContextProvider";
 import { RiDashboard2Fill, RiLockPasswordFill } from "react-icons/ri";
 import { GoDatabase } from "react-icons/go";
 import { IoMdAdd } from "react-icons/io";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { GrUserWorker } from "react-icons/gr";
 import { BsStack } from "react-icons/bs";
+import {GiDatabase } from "react-icons/gi";
 import {AiFillPieChart} from 'react-icons/ai'
 
 const Sidebar = () => {
@@ -66,6 +64,10 @@ const Sidebar = () => {
             },{
               name:"Activity Chart",
               icon:<AiFillPieChart/>
+            },
+            {
+              name:"Activity Table",
+              icon:<GiDatabase/>
             }
           ],
         }

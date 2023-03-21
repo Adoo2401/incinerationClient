@@ -1,4 +1,4 @@
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, CircularProgress, Input, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import baseURL from "../baseURL";
@@ -21,6 +21,7 @@ const AddActivity = () => {
     time: undefined,
     location: undefined,
     status: undefined,
+    wasteIncinerated:undefined
   });
 
   function changeInput(e) {
@@ -153,7 +154,10 @@ const AddActivity = () => {
               </Select>
             </div>
           </div>
-          <InputLabel className="mt-4" id="demo-simple-select-label">Status</InputLabel>
+          
+          <div className="flex justify-between items-center flex-wrap">
+            <div className="flex-[0.4]">
+            <InputLabel className="mt-4" id="demo-simple-select-label">Status</InputLabel>
           <Select
             className="w-full"
             labelId="demo-simple-select-label"
@@ -166,9 +170,16 @@ const AddActivity = () => {
           >
             <MenuItem value={"operational"}>operational</MenuItem>
             <MenuItem value={"non operational"}>non operational</MenuItem>
+            <MenuItem value={"finished"}>Finished</MenuItem>
+            <MenuItem value={"not finished"}>Not Finished</MenuItem>
           </Select>
+            </div>
+            <div className="flex-[0.4] self-center">
+            <TextField className="w-full" type="number" onChange={changeInput} name="wasteIncinerated" label="Waste Incinerated" value={data.wasteIncinerated} required />
+            </div>
+          </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <Button
               sx={{
                 marginTop: "15px",
