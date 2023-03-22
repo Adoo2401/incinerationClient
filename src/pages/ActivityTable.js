@@ -15,11 +15,12 @@ import {
   ExcelExport,
 } from "@syncfusion/ej2-react-grids";
 import { Header } from "../components";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import baseURL from "../baseURL";
 import { useStateContext } from "../contexts/ContextProvider";
+import { RiDeleteBack2Line } from "react-icons/ri";
 
 const ActivityTable = () => {
   const [loader, setLoader] = useState(true);
@@ -64,6 +65,7 @@ const ActivityTable = () => {
   }, []);
 
   const toolbarClick = (args) => {
+
     if (grids && args.item.id === "grids_excelexport") {
       grids.excelExport();
     }
@@ -83,12 +85,40 @@ const ActivityTable = () => {
     return <p>{formatedDate}</p>;
   };
 
-  const location = (props) => {
-    return props.location.location
+  const Delete=(props)=>{
     
+    async function del(){
+    
+     if(window.confirm("Are you sure you want to delete this entry?")){
+
+          try {
+            let API = await fetch(`${baseURL}/deleteActivity/${props._id}`,{
+              method:"DELETE",
+              headers:{
+                "Authorization":sessionStorage.getItem("token")
+              }
+            })
+  
+            API = await API.json();
+            if(API?.success){
+              toast.success("Deleted");
+              fetchActivites();
+            }else{
+              toast.error(API.message);
+            }
+          } catch (error) {
+            toast.error(error.message)
+          }
+    }
+    }
+    return(
+      <Button onClick={del} variant='contained' color="error" endIcon={<RiDeleteBack2Line/>}>Delte</Button>
+    )
+  
   }
 
   let grid = [
+
     {
       field: "date",
       textAlign: "Center",
@@ -135,6 +165,13 @@ const ActivityTable = () => {
       TextColor: "Black",
       BackgroundColor: "Gray",
     },
+    {
+      field: 'Delete',
+      template:Delete,
+      textAlign:"Center",
+      headerText: 'Delete',
+      width: '150',
+    },
   ];
 
   let grids;
@@ -155,6 +192,8 @@ const ActivityTable = () => {
         </div>
       ) : (
         <GridComponent
+        
+          editSettings={{allowDeleting:true}}
           toolbarClick={toolbarClick}
           className="dffdd"
           ref={(g) => (grids = g)}
@@ -165,7 +204,7 @@ const ActivityTable = () => {
           allowExcelExport={true}
           allowPdfExport={true}
           pageSettings={{ pageSize: 10 }}
-          toolbar={["Search", "ExcelExport", "PdfExport"]}
+          toolbar={["Search", "ExcelExport", "PdfExport","Delete"]}
           width="auto"
           allowSorting
           allowFiltering
