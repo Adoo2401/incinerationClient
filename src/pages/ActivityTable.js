@@ -213,7 +213,7 @@ const ActivityTable = () => {
           allowExcelExport={true}
           allowPdfExport={true}
           pageSettings={{ pageSize: 10 }}
-          toolbar={["Search", "ExcelExport", "PdfExport","Delete"]}
+          toolbar={["Search", "ExcelExport", "PdfExport"]}
           width="auto"
           allowSorting
           allowFiltering
