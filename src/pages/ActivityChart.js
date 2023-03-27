@@ -131,8 +131,7 @@ const ActivityChart = () => {
             label="Location"
             onChange={(e) => setStatus(e.target.value)}
           >
-            <MenuItem value={"operational"}>operational</MenuItem>
-            <MenuItem value={"non operational"}>non operational</MenuItem>
+            <MenuItem value={"none"}>None</MenuItem>
             <MenuItem value={"finished"}>Finished</MenuItem>
             <MenuItem value={"not finished"}>Not Finished</MenuItem>
           </Select>

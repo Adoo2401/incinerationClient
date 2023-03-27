@@ -166,6 +166,15 @@ const ActivityTable = () => {
       BackgroundColor: "Gray",
     },
     {
+      field:"wasteIncinerated",
+      textAlign:"Center",
+      headerText:"Waste Incinerated",
+      width:"100",
+      FontAttributes: "Bold",
+      TextColor: "Black",
+      BackgroundColor: "Gray",
+    },
+    {
       field: 'Delete',
       template:Delete,
       textAlign:"Center",
