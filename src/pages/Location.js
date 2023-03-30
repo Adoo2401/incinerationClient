@@ -7,10 +7,12 @@ import { toast } from 'react-toastify';
 import { BiArchiveIn, BiArchiveOut, BiEdit } from 'react-icons/bi';
 import { useStateContext } from '../contexts/ContextProvider';
 import { MdDelete } from 'react-icons/md';
+import AddLocation from '../components/AddLocation';
 
 const Location = () => {
 
   const [data,setData]=useState([])
+  const [open, setOpen] = React.useState(false);
   const {currentColor} = useStateContext()
   let token=sessionStorage.getItem("token")
   const [loader,setLoader]=useState(true);
@@ -116,8 +118,14 @@ const Location = () => {
         field:"location",
         template:location,
         headerText:"Locations",
-        textAlign:"center",
+        textAlign:"Center",
         width:'50'
+    },
+    {
+      field:"type",
+      headerText:"Type",
+      textAlign:"Center",
+      width:'50'
     },
     {
         field: 'Archive',
@@ -143,34 +151,11 @@ const Location = () => {
   ]
 
 
-  async function postLocation(){
-    let location=window.prompt("location")
-    
-    if(location==="" || location===null){
-        return;
-    }
-
-    let resp=await addLocation(token,location);
-    if(resp){
-
-        if(resp.message==="Location already exists"){
-            toast.error(resp.message);
-            return;
-        }
-
-        toast.success("Location Added");
-        fetchLocations();
-        return;
-    }
-
-    toast.error("Something Went Wrong");
-   
-  }
-
   return (
+    <>
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="Page" title="Locations" />
-      <Button style={{marginBottom:"10px"}} sx={{backgroundColor:currentColor}} variant='contained' onClick={postLocation}>Add Location</Button>
+      <Button style={{marginBottom:"10px"}} sx={{backgroundColor:currentColor}} variant='contained' onClick={()=>setOpen(true)}>Add Location</Button>
       {loader?<div style={{height:"100%",width:"100%",display:'flex',justifyContent:"center"}}>
         <CircularProgress sx={{color:currentColor}}/>
       </div>:<GridComponent filterSettings={{ignoreAccent:true,type:"Excel"}} allowTextWrap={true} dataSource={data} allowPdfExport={true} pageSettings={{pageSize:15}} toolbar={['Search']} width='auto' allowSorting allowFiltering  allowPaging>
@@ -185,6 +170,8 @@ const Location = () => {
         <Inject services={[Page,Search,Toolbar,Selection,Filter,Edit,Sort]} />
       </GridComponent>}
     </div>
+    <AddLocation fetchLocations={fetchLocations} open={open} setOpen={setOpen}/>
+    </>
   );
 };
 export default Location;
