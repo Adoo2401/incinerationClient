@@ -21,7 +21,7 @@ const AddActivity = () => {
     time: undefined,
     location: undefined,
     status: undefined,
-    wasteIncinerated:undefined
+    wasteIncinerated:0
   });
 
   function changeInput(e) {
@@ -174,7 +174,7 @@ const AddActivity = () => {
           </Select>
             </div>
             <div className="flex-[0.4] self-center">
-            <TextField className="w-full" type="number" onChange={changeInput} name="wasteIncinerated" label="Waste Incinerated" value={data.wasteIncinerated} required />
+            <TextField className="w-full" type="number" disabled={data.activity?.toLowerCase()=="incineration"?false:true} onChange={changeInput} name="wasteIncinerated" label="Waste Incinerated" value={data.activity?.toLowerCase()==="incineration"?data.wasteIncinerated:0} required />
             </div>
           </div>
 

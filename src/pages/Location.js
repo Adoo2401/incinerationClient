@@ -41,7 +41,7 @@ const Location = () => {
     }
   }
   
-  useEffect(async()=>{
+  useEffect(()=>{
       fetchLocations(false);
   },[])
 

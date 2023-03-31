@@ -14,7 +14,7 @@ import Select from "@mui/material/Select";
 const ActivityChart = () => {
   const [loader, setLoader] = useState(false);
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(null);
   const [view, setView] = useState("");
   const [data, setData] = useState([]);
   const [status, setStatus] = useState("");
@@ -141,7 +141,7 @@ const ActivityChart = () => {
         <TextField type="number" label="Waste Incinerated KG" disable value={wasteIncinerated} />
       <Button
         onClick={() => {
-          setLocation("");
+          setLocation(null);
           setStatus("");
           setView("");
         }}
