@@ -49,6 +49,7 @@ const ActivityChart = () => {
       if (API?.success) {
         setData(API.message);
         setWasteIncinerated(API.wasteIncinerated)
+        setStatus(API.status)
       } else {
         toast.error(API.message);
       }
@@ -66,7 +67,7 @@ const ActivityChart = () => {
     }
 
     fetchActivites();
-  }, [date, location, status]);
+  }, [date, location]);
 
   function handleLocation(e) {
     let singleLocation = menuItem.find(
@@ -129,11 +130,8 @@ const ActivityChart = () => {
             required
             value={status}
             label="Location"
-            onChange={(e) => setStatus(e.target.value)}
           >
-            <MenuItem value={"none"}>None</MenuItem>
-            <MenuItem value={"finished"}>Finished</MenuItem>
-            <MenuItem value={"not finished"}>Not Finished</MenuItem>
+            <MenuItem selected disabled value={status}>{status}</MenuItem>
           </Select>
         </div>
       </div>
