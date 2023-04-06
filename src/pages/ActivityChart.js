@@ -10,6 +10,7 @@ import ChartPie from "../components/ChartPie";
 import { getLocation } from "../controllers/apiController";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import LocationTable from "../components/LocationTable";
 
 const ActivityChart = () => {
   const [loader, setLoader] = useState(false);
@@ -17,7 +18,7 @@ const ActivityChart = () => {
   const [location, setLocation] = useState(null);
   const [view, setView] = useState("");
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState([]);
   const [menuItem, setMenuItem] = useState([]);
   const [menuLoader, setMenuLoader] = useState(true);
   const [wasteIncinerated, setWasteIncinerated] = useState(0)
@@ -121,7 +122,7 @@ const ActivityChart = () => {
           </Select>
         </div>
         <div className="flex-[0.3]">
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
+          {/* <InputLabel id="demo-simple-select-label">Status</InputLabel>
           <Select
             className="w-full"
             labelId="demo-simple-select-label"
@@ -132,7 +133,8 @@ const ActivityChart = () => {
             label="Location"
           >
             <MenuItem selected disabled value={status}>{status}</MenuItem>
-          </Select>
+          </Select> */}
+          <LocationTable locations={status}/>
         </div>
       </div>
         <div className="flex ml-6">
