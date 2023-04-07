@@ -73,7 +73,7 @@ const ActivityTable = () => {
     if (grids && args.item.id === "grids_pdfexport") {
       const exportProperties = {
         pageOrientation: "Landscape",
-        pageSize: "A1",
+        pageSize: "A4",
       };
       grids.pdfExport(exportProperties);
     }
